@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx.xsd
+         http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <!--<bean class="com.zaxxer.hikari.HikariDataSource" id="dataSource">-->
+        <!--<property value="com.mysql.jdbc.Driver" name="driverClassName"/>-->
+        <!--<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/tee"/>-->
+        <!--<property name="username" value="root"/>-->
+        <!--<property name="password" value="root"/>-->
+        <!--<property name="dataSourceProperties">-->
+            <!--<props>-->
+                <!--<prop key="useSSL">false</prop>-->
+                <!--<prop key="serverTimezone">UTC</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
+
+        <property value="com.mysql.jdbc.Driver" name="driverClassName"/>
+
+        <property value="jdbc:mysql://localhost:3306/tee" name="url"/>
+
+        <property value="root" name="username"/>
+
+        <property value="root" name="password"/>
+
+    </bean>
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="ru.eshop"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <!--<prop key="hibernate.default_schema">eshop</prop>-->
+                <prop key="useSSL">false</prop>
+                <prop key="serverTimezone">UTC</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="ru.eshop"/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
