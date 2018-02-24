@@ -5,13 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.eshop.dao.ProductDao;
-import ru.eshop.model.Customer;
 import ru.eshop.model.Product;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 
@@ -29,7 +25,7 @@ public class ProductDaoImpl implements ProductDao {
         return entityManager.createQuery("select i from Product i", Product.class).getResultList();
     }
 
-    public Product getProductById(int productId) {
+    public Product getProductById(long productId) {
         return entityManager.find(Product.class, productId);
     }
 

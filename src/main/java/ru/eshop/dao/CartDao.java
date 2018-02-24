@@ -9,9 +9,7 @@ import java.io.IOException;
  */
 public interface CartDao {
 
-    Cart getCartById(int cartId);
-
     Cart update(Cart cart);
 
-    Cart validate(int cartId) throws IOException;
+
 }

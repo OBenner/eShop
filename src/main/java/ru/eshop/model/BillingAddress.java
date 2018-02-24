@@ -1,47 +1,40 @@
 package ru.eshop.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class BillingAddress implements Serializable {
-    private static final long serialVersionUID = -45656544488812455L;
-    @Id
-    @GeneratedValue
-    private int billingAddressId;
+@Table(name = "BILLING_ADDRESS")
+public class BillingAddress {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(name = "street_name")
     private String streetName;
+    @Column(name = "apartment_number")
     private String apartmentNumber;
+    @Column(name = "city")
     private String city;
+    @Column(name = "state")
     private String state;
+    @Column(name = "country")
     private String country;
+    @Column(name = "zip_code")
     private String zipCode;
-    @OneToOne
-    private Customer customer;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public BillingAddress() {
     }
 
-    public BillingAddress(int billingAddressId, String streetName, String apartmentNumber, String city, String state, String country, String zipCode, Customer customer) {
-        this.billingAddressId = billingAddressId;
-        this.streetName = streetName;
-        this.apartmentNumber = apartmentNumber;
-        this.city = city;
-        this.state = state;
-        this.country = country;
-        this.zipCode = zipCode;
-        this.customer = customer;
+    public long getId() {
+        return id;
     }
 
-    public int getBillingAddressId() {
-        return billingAddressId;
-    }
-
-    public void setBillingAddressId(int billingAddressId) {
-        this.billingAddressId = billingAddressId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getStreetName() {
@@ -92,23 +85,11 @@ public class BillingAddress implements Serializable {
         this.zipCode = zipCode;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    @Override
-    public String toString() {
-        return "BillingAddress{" +
-                "streetName='" + streetName + '\'' +
-                ", apartmentNumber='" + apartmentNumber + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", country='" + country + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                '}';
+    public void setUser(User user) {
+        this.user = user;
     }
 }

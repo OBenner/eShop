@@ -7,9 +7,8 @@ import javax.persistence.*;
 @Table(name = "PAYMENT_INFO")
 public class PaymentInfo {
     @Id
-    @Column(name = "id", insertable = false,updatable = false)
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @Column(name = "card_number")
     private String cardNumber;
     @Column(name = "cvv")
@@ -21,32 +20,18 @@ public class PaymentInfo {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "customerId",nullable = false)
-    private Customer customer;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id",nullable = false)
+    private User user;
 
     public PaymentInfo() {
     }
 
-    public PaymentInfo(int id, String cardNumber, String cvv, String firstName, String lastName, String phoneNumber, Customer customer) {
-        this.id = id;
-        this.cardNumber = cardNumber;
-        this.cvv = cvv;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.customer = customer;
-    }
-
-    public PaymentInfo(PaymentInfo paymentInfoEntity) {
-
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -91,11 +76,11 @@ public class PaymentInfo {
     }
 
 
-    public Customer getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

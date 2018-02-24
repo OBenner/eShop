@@ -9,51 +9,34 @@ import java.io.Serializable;
  * Created by omyag on 08.11.2017.
  */
 @Entity
-public class CartItem implements Serializable {
-    private static final long serialVersionUID = -87425114552225455L;
+@Table(name = "CART_ITEM")
+public class CartItem  {
     @Id
-    @GeneratedValue
-    private int cartItemId;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @ManyToOne
-    @JoinColumn(name = "cartId")
-    @JsonIgnore
-    private Cart cart;
-
-
-    @ManyToOne
-    @JoinColumn(name = "productId")
-    @JsonIgnore
+    @JoinColumn(name = "product_id")
     private Product product;
-
+    @ManyToOne
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
+    @Column(name = "quantity")
     private int quantity;
-    private double totalPrice;
+
 
     public CartItem() {
     }
 
-    public CartItem(int cartItemId, Cart cart, Product product, int quantity, double totalPrice) {
-        this.cartItemId = cartItemId;
-        this.cart = cart;
-        this.product = product;
-        this.quantity = quantity;
-        this.totalPrice = totalPrice;
+    public CartItem(CartItem item) {
+        this.product= new Product(item.getProduct());
     }
 
-    public int getCartItemId() {
-        return cartItemId;
+    public Long getId() {
+        return id;
     }
 
-    public void setCartItemId(int cartItemId) {
-        this.cartItemId = cartItemId;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Product getProduct() {
@@ -64,19 +47,19 @@ public class CartItem implements Serializable {
         this.product = product;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
     public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
     }
 }

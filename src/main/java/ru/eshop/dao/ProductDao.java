@@ -11,7 +11,7 @@ public interface ProductDao {
 
     List<Product> getProductList();
 
-    Product getProductById(int id);
+    Product getProductById(long id);
 
     Product saveProduct(Product product);
 

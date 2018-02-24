@@ -2,23 +2,23 @@ package ru.eshop.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-public class CustomerOrder implements Serializable {
-    private static final long serialVersionUID = 5659845114554445455L;
-
+@Table(name = "CUSTOMER_ORDER")
+public class CustomerOrder  {
 
     @Id
-    @GeneratedValue
-    private int customerOrderId;
-
-    @OneToOne
-    @JoinColumn(name = "cartId")
-    private Cart cart;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(name = "total")
+    private Float total;
+    @Column(name = "date")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date date;
     @OneToOne
     @JoinColumn(name = "customerId")
-    private Customer customer;
+    private User user;
     @OneToOne
     @JoinColumn(name = "billingAddressId")
     private BillingAddress billingAddress;
@@ -27,41 +27,43 @@ public class CustomerOrder implements Serializable {
     @JoinColumn(name = "shippingAddressId")
     private ShippingAddress shippingAddress;
 
+    @ManyToOne
+    @JoinColumn(name = "payment_info_id", nullable = false)
+    private PaymentInfo paymentInfo;
 
     public CustomerOrder() {
     }
 
-
-    public CustomerOrder(int customerOrderId, Cart cart, Customer customer, BillingAddress billingAddress, ShippingAddress shippingAddress) {
-        this.customerOrderId = customerOrderId;
-        this.cart = cart;
-        this.customer = customer;
-        this.billingAddress = billingAddress;
-        this.shippingAddress = shippingAddress;
+    public long getId() {
+        return id;
     }
 
-    public int getCustomerOrderId() {
-        return customerOrderId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setCustomerOrderId(int customerOrderId) {
-        this.customerOrderId = customerOrderId;
+    public Float getTotal() {
+        return total;
     }
 
-    public Cart getCart() {
-        return cart;
+    public void setTotal(Float total) {
+        this.total = total;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public Date getDate() {
+        return date;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public BillingAddress getBillingAddress() {
@@ -78,5 +80,13 @@ public class CustomerOrder implements Serializable {
 
     public void setShippingAddress(ShippingAddress shippingAddress) {
         this.shippingAddress = shippingAddress;
+    }
+
+    public PaymentInfo getPaymentInfo() {
+        return paymentInfo;
+    }
+
+    public void setPaymentInfo(PaymentInfo paymentInfo) {
+        this.paymentInfo = paymentInfo;
     }
 }

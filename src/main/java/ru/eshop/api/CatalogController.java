@@ -18,6 +18,7 @@ public class CatalogController {
     @Autowired
     private ProductService productService;
 
+
     @RequestMapping(method = RequestMethod.POST,produces = APPLICATION_JSON_VALUE)
     public Product addProduct(@RequestBody Product product){
         return productService.addProduct(product);

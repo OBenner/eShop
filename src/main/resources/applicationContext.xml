@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-         http://www.springframework.org/schema/tx
-         http://www.springframework.org/schema/tx/spring-tx.xsd
-         http://www.springframework.org/schema/context
-          http://www.springframework.org/schema/context/spring-context.xsd
-           http://www.springframework.org/schema/mvc
-           http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.1.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/security/oauth2
+       http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+
+      ">
 
 
     <!--<bean class="com.zaxxer.hikari.HikariDataSource" id="dataSource">-->
@@ -44,7 +53,7 @@
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <!--<prop key="hibernate.default_schema">eshop</prop>-->
@@ -64,4 +73,102 @@
     <mvc:annotation-driven/>
     <context:component-scan base-package="ru.eshop"/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
+    <security:authentication-manager alias="userAuthenticationManager">
+        <security:authentication-provider user-service-ref="customUserDetailsService">
+            <security:password-encoder ref="passwordEncoder"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <security:http pattern="/users" create-session="never"
+                   authentication-manager-ref="clientAuthenticationManager">
+        <security:intercept-url pattern="/user" method="POST" access="isFullyAuthenticated()"/>
+        <security:intercept-url pattern="/users" method="GET" access="hasAnyAuthority('USER')"/>
+        <security:anonymous enabled="false"/>
+        <security:http-basic entry-point-ref="clientAuthenticationEntryPoint"/>
+        <!--<security:access-denied-handler ref="oauthAccessDeniedHandler"/>-->
+        <security:csrf disabled="true"/>
+    </security:http>
+
+    <!-- The token endpoint See org.springframework.security.oauth2.provider.endpoint.TokenEndpoint-->
+    <security:http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager"
+                   xmlns="http://www.springframework.org/schema/security">
+        <security:anonymous enabled="false"/>
+        <security:http-basic entry-point-ref="oauthRestEntryPoint" />
+        <!--<security:access-denied-handler ref="oauthAccessDeniedHandler"/>-->
+        <!--<security:custom-filter ref="corsFilter" after="LAST"/>-->
+        <security:csrf disabled="true"/>
+    </security:http>
+
+    <bean id="oauthRestEntryPoint" class="ru.eshop.security.OAuthRestEntryPoint"/>
+
+    <bean id="clientAuthenticationEntryPoint"
+          class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">
+        <property name="typeName" value="Basic"/>
+    </bean>
+    <bean id="oauthAccessDeniedHandler"
+          class="org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler"/>
+
+    <security:http create-session="never" auto-config="true" use-expressions="true" entry-point-ref="oauthAuthenticationEntryPoint">
+        <security:intercept-url pattern="/catalog" access="permitAll()"/>
+        <security:intercept-url pattern="/admin" access="hasAuthority('ADMIN')"/>
+        <security:intercept-url pattern="/user" access="hasAuthority('USER')"/>
+        <security:intercept-url pattern="/**" access="hasAnyAuthority('USER', 'ADMIN')"/>
+        <security:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
+        <!--<security:access-denied-handler ref="oauthAccessDeniedHandler"/>-->
+        <security:csrf disabled="true"/>
+    </security:http>
+
+    <bean id="oauthAuthenticationEntryPoint"
+          class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">
+        <property name="realmName" value="test"/>
+    </bean>
+
+    <security:authentication-manager id="clientAuthenticationManager" xmlns="http://www.springframework.org/schema/security">
+        <security:authentication-provider user-service-ref="client-details-user-service"/>
+    </security:authentication-manager>
+
+    <bean id="client-details-user-service" class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
+        <constructor-arg ref="client-details-service" />
+    </bean>
+
+    <oauth:client-details-service id="client-details-service">
+
+        <!-- Allow access to test clients -->
+        <oauth:client
+                client-id="353b302c44574f565045687e534e7d6a"
+                secret="286924697e615a672a646a493545646c"
+                authorized-grant-types="password,refresh_token"
+                authorities="ROLE_TEST"
+                access-token-validity="5184000"
+                refresh-token-validity="5184000"
+                scope="read, write"
+        />
+
+
+
+    </oauth:client-details-service>
+
+    <oauth:authorization-server client-details-service-ref="client-details-service" token-services-ref="tokenServices">
+        <oauth:refresh-token/>
+        <oauth:password/>
+    </oauth:authorization-server>
+
+    <oauth:resource-server id="resourceServerFilter" token-services-ref="tokenServices"/>
+
+    <bean id="clientCredentialsTokenEndpointFilter"
+          class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter">
+        <property name="authenticationManager" ref="clientAuthenticationManager"/>
+    </bean>
+
+    <bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
+        <property name="tokenStore" ref="tokenStore"/>
+        <property name="supportRefreshToken" value="true"/>
+        <property name="clientDetailsService" ref="client-details-service"/>
+    </bean>
+
+    <!--<beans profile="dev">-->
+    <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore"/>
+
 </beans>

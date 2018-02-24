@@ -4,69 +4,57 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by omyag on 08.11.2017.
  */
 @Entity
-public class Cart implements Serializable {
-
-    private static final long serialVersionUID = -8899998744554445455L;
+@Table(name = "CART")
+public class Cart  {
 
     @Id
-    @GeneratedValue
-    private int cartId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<CartItem> cartItems;
     @OneToOne
-    @JoinColumn(name = "customerId")
-    @JsonIgnore
-    private Customer customer;
-
-    private double grandTotal;
-
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> items;
 
     public Cart() {
     }
-
-    public Cart(int cartId, List<CartItem> cartItems, Customer customer, double grandTotal) {
-        this.cartId = cartId;
-        this.cartItems = cartItems;
-        this.customer = customer;
-        this.grandTotal = grandTotal;
+    public Cart(Cart entity) {
+        for (CartItem item : entity.getItems()) {
+            getItems().add(new CartItem(item));
+        }
+    }
+    public Long getId() {
+        return id;
     }
 
-    public int getCartId() {
-        return cartId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
+    public User getUser() {
+        return user;
     }
 
-    public List<CartItem> getCartItems() {
-        return cartItems;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
+    public List<CartItem> getItems() {
+        if (items == null) {
+            items = new ArrayList<CartItem>();
+        }
+        return items;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public double getGrandTotal() {
-        return grandTotal;
-    }
-
-    public void setGrandTotal(double grandTotal) {
-        this.grandTotal = grandTotal;
+    public void setItems(List<CartItem> items) {
+        this.items = items;
     }
 }

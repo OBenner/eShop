@@ -12,65 +12,53 @@ import java.util.List;
  * Created by omyag on 19.10.2017.
  */
 @Entity
-@Table(name = "product")
-public class Product implements Serializable {
-    private static final long serialVersionUID = -454545114554445455L;
-
-
+@Table(name = "PRODUCT")
+public class Product {
     @Id
-    @Column(name = "productId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int productId;
+    private long productId;
 
-    //  @NotEmpty(message = "The product name must not be null.")
-    @Column(name = "productName")
+    @Column(name = "product_name")
     private String productName;
-    @Column(name = "productCategory")
+    @Column(name = "product_category")
     private String productCategory;
-    @Column(name = "productDescription")
+    @Column(name = "product_description")
     private String productDescription;
-    @Column(name = "productPrice")
-    //  @Min(value = 0, message = "The product price must no be less then zero.")
+    @Column(name = "product_price")
     private double productPrice;
-    @Column(name = "productCondition")
+    @Column(name = "product_condition")
     private String productCondition;
-    @Column(name = "productStatus")
+    @Column(name = "product_status")
     private String productStatus;
-    @Column(name = "productManufacturer")
+    @Column(name = "product_manufacturer")
     private String productManufacturer;
-    @Column(name = "unitInStock")
-    //  @Min(value = 0, message = "The product unit must no be less then zero.")
+    @Column(name = "unit_in_stock")
     private int unitInStock;
 
-    @Transient
-    private MultipartFile productImage;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
-    private List<CartItem> cartItemList;
 
     public Product() {
     }
 
-    public Product(int productId, String productName, String productCategory, String productDescription, double productPrice, String productCondition, String productStatus, String productManufacturer, int unitInStock, MultipartFile productImage, List<CartItem> cartItemList) {
-        this.productId = productId;
-        this.productName = productName;
-        this.productCategory = productCategory;
-        this.productDescription = productDescription;
-        this.productPrice = productPrice;
-        this.productCondition = productCondition;
-        this.productStatus = productStatus;
-        this.productManufacturer = productManufacturer;
-        this.unitInStock = unitInStock;
-        this.productImage = productImage;
-        this.cartItemList = cartItemList;
+
+
+    public Product(Product product) {
+        this.productId=product.getProductId();
+        this.productName = product.getProductName();
+        this.productCategory = product.getProductCategory();
+        this.productDescription = product.getProductDescription();
+        this.productPrice = product.getProductPrice();
+        this.productCondition = product.getProductCondition();
+        this.productStatus = product.getProductStatus();
+        this.productManufacturer = product.getProductManufacturer();
+        this.unitInStock = product.getUnitInStock();
     }
 
-    public int getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(long productId) {
         this.productId = productId;
     }
 
@@ -94,8 +82,8 @@ public class Product implements Serializable {
         return productDescription;
     }
 
-    public void setProductDescriprion(String productDescriprion) {
-        this.productDescription = productDescriprion;
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
     public double getProductPrice() {
@@ -136,26 +124,5 @@ public class Product implements Serializable {
 
     public void setUnitInStock(int unitInStock) {
         this.unitInStock = unitInStock;
-    }
-
-
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
-    }
-
-    public MultipartFile getProductImage() {
-        return productImage;
-    }
-
-    public void setProductImage(MultipartFile productImage) {
-        this.productImage = productImage;
-    }
-
-    public List<CartItem> getCartItemList() {
-        return cartItemList;
-    }
-
-    public void setCartItemList(List<CartItem> cartItemList) {
-        this.cartItemList = cartItemList;
     }
 }
