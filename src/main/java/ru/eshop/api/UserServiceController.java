@@ -25,10 +25,7 @@ public class UserServiceController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET,produces = APPLICATION_JSON_VALUE)
-    public List<User> getAllUsers(){
-        return  userService.getAllUsers();
-    }
+
 
 
 

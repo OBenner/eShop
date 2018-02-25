@@ -20,7 +20,7 @@ public class ProductDaoImpl implements ProductDao {
     @Autowired
     private EntityManager entityManager;
 
-    @Transactional
+
     public List<Product> getProductList() {
         return entityManager.createQuery("select i from Product i", Product.class).getResultList();
     }
@@ -29,13 +29,13 @@ public class ProductDaoImpl implements ProductDao {
         return entityManager.find(Product.class, productId);
     }
 
-    @Transactional
+
     public Product saveProduct(Product product) {
         return entityManager.merge(product);
     }
 
 
-    @Transactional
+
     public void deleteProduct(Product product) {
         entityManager.remove(product);
     }

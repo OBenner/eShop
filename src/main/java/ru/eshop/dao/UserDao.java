@@ -5,6 +5,8 @@ import ru.eshop.model.User;
 import java.util.List;
 
 public interface UserDao {
+
+
     User createUser(User user);
 
     User getUserById(Long customerId);
@@ -12,4 +14,6 @@ public interface UserDao {
     List<User> getAllUsers();
 
     User getUserByEmail(String username);
+
+    String deleteUser(User user);
 }

@@ -43,6 +43,7 @@ public class Product {
 
 
     public Product(Product product) {
+
         this.productId=product.getProductId();
         this.productName = product.getProductName();
         this.productCategory = product.getProductCategory();

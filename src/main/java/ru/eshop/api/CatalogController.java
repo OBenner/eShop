@@ -12,25 +12,21 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("catalog")
+@RequestMapping("/catalog")
 public class CatalogController {
 
     @Autowired
     private ProductService productService;
 
 
-    @RequestMapping(method = RequestMethod.POST,produces = APPLICATION_JSON_VALUE)
-    public Product addProduct(@RequestBody Product product){
-        return productService.addProduct(product);
+    @RequestMapping(method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
+    public List<Product> getAllProduct() {
+        return productService.getProductList();
     }
 
-    @RequestMapping(method = RequestMethod.GET,produces = APPLICATION_JSON_VALUE)
-    public List<Product> getAllProduct(){
-        return  productService.getProductList();
-    }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE,value = "{id}")
-    public Product getProductDetails(@PathVariable int id){
+    public Product getProductDetails(@PathVariable Long id){
         return productService.getProductById(id);
     }
 

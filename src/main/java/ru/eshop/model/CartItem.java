@@ -21,7 +21,7 @@ public class CartItem  {
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
 
     public CartItem() {
@@ -55,11 +55,11 @@ public class CartItem  {
         this.cart = cart;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 }

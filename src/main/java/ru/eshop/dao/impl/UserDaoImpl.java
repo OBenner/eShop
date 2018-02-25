@@ -53,4 +53,9 @@ public class UserDaoImpl implements UserDao {
      // return   entityManager.find(User.class, email);
     }
 
+    public String deleteUser(User user) {
+        entityManager.remove(user);
+        return "User delete";
+    }
+
 }

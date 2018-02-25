@@ -1,6 +1,8 @@
 package ru.eshop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,19 +36,23 @@ public class User  {
     private String password;
 
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<PaymentInfo> paymentInfo;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<BillingAddress> billingAddress;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<ShippingAddress> shippingAddress;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<CustomerOrder> orders;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user",fetch = FetchType.EAGER)
     private Cart cart;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -62,6 +68,10 @@ public class User  {
     public User(User entity) {
         this.id = entity.getId();
         this.email = entity.getEmail();
+        this.cart=entity.getCart();
+        this.name=entity.getName();
+        this.password=entity.getPassword();
+        this.phone=entity.getPhone();
         for (ShippingAddress shippingInfoEntity : entity.getShippingAddress()) {
             getShippingAddress().add(new ShippingAddress(shippingInfoEntity));
         }

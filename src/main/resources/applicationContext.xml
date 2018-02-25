@@ -81,15 +81,25 @@
         </security:authentication-provider>
     </security:authentication-manager>
 
-    <security:http pattern="/users" create-session="never"
-                   authentication-manager-ref="clientAuthenticationManager">
-        <security:intercept-url pattern="/user" method="POST" access="isFullyAuthenticated()"/>
-        <security:intercept-url pattern="/users" method="GET" access="hasAnyAuthority('USER')"/>
-        <security:anonymous enabled="false"/>
-        <security:http-basic entry-point-ref="clientAuthenticationEntryPoint"/>
-        <!--<security:access-denied-handler ref="oauthAccessDeniedHandler"/>-->
-        <security:csrf disabled="true"/>
-    </security:http>
+    <!--<security:http pattern="/users" create-session="never"-->
+                   <!--authentication-manager-ref="clientAuthenticationManager">-->
+        <!--&lt;!&ndash;<security:intercept-url pattern="/user" method="POST" access="IS_AUTHENTICATED_FULLY()"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<security:intercept-url pattern="/user" method="GET" access="isFullyAuthenticated()"/>&ndash;&gt;-->
+        <!--<security:anonymous enabled="false"/>-->
+        <!--<security:http-basic entry-point-ref="clientAuthenticationEntryPoint"/>-->
+        <!--&lt;!&ndash;<security:access-denied-handler ref="oauthAccessDeniedHandler"/>&ndash;&gt;-->
+        <!--<security:csrf disabled="true"/>-->
+    <!--</security:http>-->
+
+
+    <!--<security:http pattern="/admin" create-session="never"-->
+                   <!--authentication-manager-ref="clientAuthenticationManager">-->
+        <!--<security:intercept-url pattern="/admin" access="hasAuthority('ADMIN')"/>-->
+        <!--<security:anonymous enabled="false"/>-->
+        <!--<security:http-basic entry-point-ref="clientAuthenticationEntryPoint"/>-->
+        <!--&lt;!&ndash;<security:access-denied-handler ref="oauthAccessDeniedHandler"/>&ndash;&gt;-->
+        <!--<security:csrf disabled="true"/>-->
+    <!--</security:http>-->
 
     <!-- The token endpoint See org.springframework.security.oauth2.provider.endpoint.TokenEndpoint-->
     <security:http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager"
@@ -112,9 +122,9 @@
 
     <security:http create-session="never" auto-config="true" use-expressions="true" entry-point-ref="oauthAuthenticationEntryPoint">
         <security:intercept-url pattern="/catalog" access="permitAll()"/>
-        <security:intercept-url pattern="/admin" access="hasAuthority('ADMIN')"/>
-        <security:intercept-url pattern="/user" access="hasAuthority('USER')"/>
-        <security:intercept-url pattern="/**" access="hasAnyAuthority('USER', 'ADMIN')"/>
+        <security:intercept-url pattern="/admin/**" access="hasAuthority('ADMIN')"/>
+        <security:intercept-url pattern="/user/**" access="hasAnyAuthority('USER', 'ADMIN')"/>
+        <!--<security:intercept-url pattern="/**" access="hasAnyAuthority('USER', 'ADMIN')"/>-->
         <security:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
         <!--<security:access-denied-handler ref="oauthAccessDeniedHandler"/>-->
         <security:csrf disabled="true"/>

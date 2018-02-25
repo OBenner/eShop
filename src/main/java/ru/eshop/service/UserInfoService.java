@@ -6,20 +6,21 @@ import ru.eshop.model.ShippingAddress;
 import ru.eshop.model.User;
 
 public interface UserInfoService {
-    User getUserInfo();
 
 
-    PaymentInfo addPaymentInfo(PaymentInfo paymentInfo);
+    User getUserInfo(String email);
 
-    PaymentInfo updatePaymentInfo(PaymentInfo paymentInfo);
+    User addPaymentInfo(String email,PaymentInfo paymentInfo);
 
-    ShippingAddress addShippingAddress(ShippingAddress shippingAddress);
+    User updatePaymentInfo(PaymentInfo paymentInfo);
 
-    ShippingAddress updateShippingAddress(ShippingAddress shippingAddress);
+    User addShippingAddress(String email,ShippingAddress shippingAddress);
 
-    BillingAddress addBillingAddress(BillingAddress billingAddress);
+    User updateShippingAddress(ShippingAddress shippingAddress);
 
-    BillingAddress updateBillingAddress(BillingAddress billingAddress);
+    User addBillingAddress(String email,BillingAddress billingAddress);
+
+    User updateBillingAddress(BillingAddress billingAddress);
 
 
 }

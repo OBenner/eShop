@@ -11,6 +11,7 @@ import ru.eshop.model.User;
 import ru.eshop.model.ShippingAddress;
 import ru.eshop.service.UserService;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -23,37 +24,36 @@ public class UserServiceImpl implements UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+
+    // сделать проверку на существующий в базе email
     @Transactional
     public User addUser(User user) {
+//        if (userDao.getUserByEmail(user.getEmail()).equals(user.getEmail())){
+//            throw new IOException("User Already exist");
+//            return ;
+//        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoles().add(roleDao.findRoleByName("USER"));
 
         return new User(userDao.createUser(user));
     }
 
+    @Transactional
     public User getUserById(Long customerId) {
 
         return userDao.getUserById(customerId);
     }
 
+    @Transactional
     public List<User> getAllUsers() {
 
         return userDao.getAllUsers();
     }
 
-    public User getUserInfo(String email) {
-        return userDao.getUserByEmail(email);
+    @Transactional
+    public void deleteUser(User user) {
+        userDao.deleteUser(user);
     }
 
-    public User addShippingAddress(String email, ShippingAddress shippingAddress) {
-        User user = userDao.getUserByEmail(email);
-        shippingAddress.setUser(user);
-        user.getShippingAddress().add(shippingAddress);
-        return new User(userDao.createUser(user));
-    }
-
-    public User addBillingAddress(BillingAddress billingAddress) {
-        return null;
-    }
 
 }

@@ -17,7 +17,7 @@ public class BillingAddressDaoImpl implements BillingAddressDao {
 
 
 
-    @Transactional
+
     public BillingAddress create(BillingAddress billingAddress) {
         return entityManager.merge(billingAddress);
     }

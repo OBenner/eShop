@@ -26,8 +26,18 @@ public class Cart  {
 
     public Cart() {
     }
-    public Cart(Cart entity) {
-        for (CartItem item : entity.getItems()) {
+
+    public Cart(User user, List<CartItem> items) {
+        this.user = user;
+        this.items = items;
+    }
+
+    public Cart(Cart cart) {
+
+        if (cart == null){
+            cart = new Cart();
+        }
+         for (CartItem item : cart.getItems()) {
             getItems().add(new CartItem(item));
         }
     }

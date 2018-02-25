@@ -18,13 +18,13 @@ public class CartController  extends  BaseController{
 private CartService cartService;
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Cart addProductToCart(@RequestParam("productId") long productId, @RequestParam("quantity") Integer quantity) {
+    public Cart addProductToCart(@RequestParam("productId") Long productId, @RequestParam("quantity") Integer quantity) {
         return cartService.addProductToCart(getPrincipal(), productId, quantity);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public Cart removeItemFromCart(@RequestParam("itemId") Long itemId) {
-        return cartService.removeProductFromCart(getPrincipal(), itemId);
+    public Cart removeItemFromCart(@RequestParam("productId") Long productId) {
+        return cartService.removeProductFromCart(getPrincipal(), productId);
     }
 
     @RequestMapping(method = RequestMethod.GET)

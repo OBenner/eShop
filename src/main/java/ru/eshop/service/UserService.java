@@ -4,6 +4,7 @@ import ru.eshop.model.BillingAddress;
 import ru.eshop.model.User;
 import ru.eshop.model.ShippingAddress;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface UserService {
@@ -14,9 +15,6 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    User  getUserInfo(String email);
+    void   deleteUser(User user);
 
-    User addShippingAddress(String email,ShippingAddress shippingAddress);
-
-    User addBillingAddress(BillingAddress billingAddress);
 }

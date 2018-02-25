@@ -29,12 +29,12 @@ public class CartServiceImpl implements CartService {
         User user = userDao.getUserByEmail(userEmail);
         Cart cart = user.getCart();
         CartItem toDelete = null;
-        for (CartItem cartItem:cart.getItems()){
-            if (cartItem.getProduct().getProductId().equals(itemId)){
+        for (CartItem cartItem : cart.getItems()) {
+            if (cartItem.getProduct().getProductId().equals(itemId)) {
                 toDelete = cartItem;
             }
         }
-        if (toDelete!=null){
+        if (toDelete != null) {
             cart.getItems().remove(toDelete);
         }
         return new Cart(cartDao.update(cart));
@@ -42,10 +42,13 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     public Cart getCart(String userEmail) {
-        User user= userDao.getUserByEmail(userEmail);
-        return new Cart(user.getCart());
+        User user = userDao.getUserByEmail(userEmail);
+        Cart cart = new Cart(user.getCart());
+
+        return cart;
     }
 
+    @Transactional
     public Cart addProductToCart(String userEmail, Long itemId, Integer quantity) {
         User user = userDao.getUserByEmail(userEmail);
         Cart cart = user.getCart();
@@ -64,7 +67,7 @@ public class CartServiceImpl implements CartService {
             }
         }
 
-        if (!itemAlreadyExists){
+        if (!itemAlreadyExists) {
             CartItem commerceItemEntity = new CartItem();
             commerceItemEntity.setQuantity(quantity);
             commerceItemEntity.setProduct(item);
