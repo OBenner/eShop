@@ -1,5 +1,7 @@
 package ru.eshop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -23,8 +25,9 @@ public class ShippingAddress {
     private String country;
     @Column(name = "zip_code")
     private String zipCode;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
 
 
@@ -32,6 +35,14 @@ public class ShippingAddress {
     }
 
     public ShippingAddress(ShippingAddress shippingInfoEntity) {
+        this.id=shippingInfoEntity.id;
+        this.apartmentNumber=shippingInfoEntity.apartmentNumber;
+        this.city=shippingInfoEntity.city;
+        this.country=shippingInfoEntity.country;
+        this.state=shippingInfoEntity.state;
+        this.streetName=shippingInfoEntity.streetName;
+        this.zipCode=shippingInfoEntity.zipCode;
+        this.user=shippingInfoEntity.user;
     }
 
     public long getId() {

@@ -7,5 +7,6 @@ public interface CartService {
     Cart getCart(String userEmail);
     Cart addProductToCart(String userEmail, Long itemId, Integer quantity);
     Cart update(Long itemId, Integer quantity);
+    Cart getCartById(Long id);
 
 }

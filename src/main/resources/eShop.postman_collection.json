@@ -1,0 +1,582 @@
+{
+	"info": {
+		"name": "eShop",
+		"_postman_id": "64c35514-6604-0ed2-4bd7-a9ea55740df5",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Catalog Products (work)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/eshop/catalog",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"catalog"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "add User (work)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"test\",\n    \"email\": \"test@test.com\",\n    \"phone\": \"5555555\",\n    \"password\": \"123\"\n   \n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/eshop/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"users"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "get Cart (work)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "test@test.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/eshop/cart",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"cart"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "add Product to Cart (work)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "test@test.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/eshop/cart?productId=1&quantity=2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"cart"
+					],
+					"query": [
+						{
+							"key": "productId",
+							"value": "1",
+							"equals": true
+						},
+						{
+							"key": "quantity",
+							"value": "2",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Item From Cart (work)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin@admin.ru",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/eshop/cart?productId=3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"cart"
+					],
+					"query": [
+						{
+							"key": "productId",
+							"value": "3",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get Product By Id (work)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n    \"productName\": \"asdd\",\n    \"productCategory\": \"fashion\",\n    \"productDescription\": \"\",\n    \"productPrice\": 100,\n    \"productCondition\": \"new\",\n    \"productStatus\": \"active\",\n    \"productManufacturer\": \"\",\n    \"unitInStock\": 0,\n    \"productImage\": null\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/eshop/catalog/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"catalog",
+						"2"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "addProduct (work)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin@admin.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n        \"productName\": \"Sumsung\",\n        \"productCategory\": \"comp\",\n        \"productDescription\": \"Phone\",\n        \"productPrice\": 1000,\n        \"productCondition\": \"new\",\n        \"productStatus\": \"true\",\n        \"productManufacturer\": \"USA\",\n        \"unitInStock\": 1,\n        \"productImage\": null\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/eshop/admin/addProduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"admin",
+						"addProduct"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "add Shipping Info",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "test@test.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"streetName\":\"Elm\",\n\t\"apartmentNumber\":\"1\",\n\t\"city\":\"Saratov\",\n\t\"state\":\"Sar\",\n\t\"country\":\"Russia\",\n\t\"zipCode\":\"111\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/eshop/user/shippingAddress",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"user",
+						"shippingAddress"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "add Billing Address",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "test@test.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"streetName\":\"Elm\",\n\t\"apartmentNumber\":\"1\",\n\t\"city\":\"Saratov\",\n\t\"state\":\"Sar\",\n\t\"country\":\"Russia\",\n\t\"zipCode\":\"111\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/eshop/user/billingAddress",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"user",
+						"billingAddress"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Payment Info",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "test@test.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"cardNumber\":\"111 222 555 666\",\n\t\"cvv\":\"123\",\n\t\"firstName\":\"Oleg\",\n\t\"lastName\":\"M\",\n\t\"phoneNumber\":\"123456789\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/eshop/user/paymentInfo",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"user",
+						"paymentInfo"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "User Info",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "test@test.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/eshop/user/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"user",
+						"1"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "get All Customer (work?)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin@admin.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/eshop/admin/userList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"admin",
+						"userList"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "delete User",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "1test@test.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/eshop/user/delete",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"user",
+						"delete"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "checOut",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "test@test.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/eshop/user/checkOut?cartId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"eshop",
+						"user",
+						"checkOut"
+					],
+					"query": [
+						{
+							"key": "cartId",
+							"value": "1",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

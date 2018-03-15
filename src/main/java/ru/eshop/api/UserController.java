@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
-import ru.eshop.model.BillingAddress;
-import ru.eshop.model.PaymentInfo;
-import ru.eshop.model.User;
-import ru.eshop.model.ShippingAddress;
+import ru.eshop.model.*;
 import ru.eshop.service.UserInfoService;
 import ru.eshop.service.UserService;
 
@@ -38,8 +35,8 @@ public class UserController extends BaseController {
         return userInfoService.addPaymentInfo(getPrincipal(), paymentInfo);
     }
 
-    @RequestMapping(value = "delete",method = RequestMethod.DELETE)
-    public String deleteUser(User user){
+    @RequestMapping(value = "delete", method = RequestMethod.DELETE)
+    public String deleteUser(User user) {
         userService.deleteUser(user);
         return "user delete";
     }
@@ -49,5 +46,14 @@ public class UserController extends BaseController {
         return userInfoService.getUserInfo(getPrincipal());
     }
 
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "{id}")
+    public User getUserInfo(@PathVariable Long id) {
+        return userService.getUserById(id);
+    }
 
+    @RequestMapping(value = "checkOut", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public CustomerOrder createOrder(@RequestParam("cartId") Long cartId) {
+
+        return userInfoService.createOrder(getPrincipal(), cartId);
+    }
 }

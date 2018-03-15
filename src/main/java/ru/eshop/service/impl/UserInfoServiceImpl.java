@@ -3,11 +3,8 @@ package ru.eshop.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.eshop.dao.UserDao;
-import ru.eshop.model.BillingAddress;
-import ru.eshop.model.PaymentInfo;
-import ru.eshop.model.ShippingAddress;
-import ru.eshop.model.User;
+import ru.eshop.dao.*;
+import ru.eshop.model.*;
 import ru.eshop.service.UserInfoService;
 
 @Service
@@ -15,6 +12,20 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private ShippingAddressDao shippingAddressDao;
+
+    @Autowired
+    private PaymentInfoDao paymentInfoDao;
+
+    @Autowired
+    private BillingAddressDao billingAddressDao;
+    @Autowired
+    private CustomerOrderDao customerOrderDao;
+
+    @Autowired
+    private CartDao cartDao;
 
     @Transactional
     public User getUserInfo(String email) {
@@ -26,7 +37,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         User user = userDao.getUserByEmail(email);
         paymentInfo.setUser(user);
         user.getPaymentInfo().add(paymentInfo);
-        return new User(userDao.createUser(user));
+        paymentInfoDao.create(paymentInfo);
+        return userDao.createUser(user);
     }
 
     public User updatePaymentInfo(PaymentInfo paymentInfo) {
@@ -38,7 +50,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         User user = userDao.getUserByEmail(email);
         shippingAddress.setUser(user);
         user.getShippingAddress().add(shippingAddress);
-        return new User(userDao.createUser(user));
+        shippingAddressDao.create(shippingAddress);
+        return userDao.createUser(user);
     }
 
     public User updateShippingAddress(ShippingAddress shippingAddress) {
@@ -50,8 +63,21 @@ public class UserInfoServiceImpl implements UserInfoService {
         User user = userDao.getUserByEmail(email);
         billingAddress.setUser(user);
         user.getBillingAddress().add(billingAddress);
-        return new User(userDao.createUser(user));
+        billingAddressDao.create(billingAddress);
+        return userDao.createUser(user);
     }
+
+    @Transactional
+    public CustomerOrder createOrder(String email, Long cartId) {
+        User user = userDao.getUserByEmail(email);
+        CustomerOrder customerOrder = (CustomerOrder) user.getOrders();
+        customerOrder.setBillingAddress((BillingAddress) user.getBillingAddress());
+        customerOrder.setPaymentInfo((PaymentInfo) user.getPaymentInfo());
+        customerOrder.setShippingAddress((ShippingAddress) user.getShippingAddress());
+        customerOrder.setCart(cartDao.findById(cartId));
+        return new CustomerOrder(customerOrderDao.update(customerOrder)) ;
+    }
+
 
     public User updateBillingAddress(BillingAddress billingAddress) {
         return null;

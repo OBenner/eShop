@@ -55,5 +55,11 @@ public class UserServiceImpl implements UserService {
         userDao.deleteUser(user);
     }
 
-
+//    public User doesUserExist(String email) throws UserNotFoundException {
+//        List<User> users = (List<User>) userDAO.findByEmail(email);
+//        if(users.size() == 0) {
+//            throw new UserNotFoundException("User does not exist in the database.");
+//        }
+//        return users.get(0);
+//    }
 }

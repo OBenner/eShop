@@ -1,6 +1,8 @@
 package ru.eshop.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,11 +22,22 @@ public class PaymentInfo {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id",nullable = false)
+    @JsonBackReference
     private User user;
 
     public PaymentInfo() {
+    }
+
+    public PaymentInfo(PaymentInfo paymentInfo) {
+        this.id=paymentInfo.id;
+        this.cardNumber=paymentInfo.cardNumber;
+        this.cvv=paymentInfo.cvv;
+        this.firstName=paymentInfo.firstName;
+        this.lastName=paymentInfo.lastName;
+        this.phoneNumber=paymentInfo.phoneNumber;
+        this.user=paymentInfo.user;
     }
 
     public long getId() {

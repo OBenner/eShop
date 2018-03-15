@@ -1,22 +1,21 @@
 package ru.eshop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "user")
 @NamedQueries(
         @NamedQuery(name = "selectUserByEmail", query = "from User u where u.email=:email")
 )
-public class User  {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,23 +35,28 @@ public class User  {
     private String password;
 
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
+    @JsonManagedReference
     private List<PaymentInfo> paymentInfo;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
+    @JsonManagedReference
     private List<BillingAddress> billingAddress;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
+    @JsonManagedReference
     private List<ShippingAddress> shippingAddress;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
+    @JsonManagedReference
     private List<CustomerOrder> orders;
 
-    @OneToOne(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Cart cart;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -60,22 +64,31 @@ public class User  {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
+    @JsonManagedReference
     private Set<Role> roles;
 
 
     public User() {
     }
+
     public User(User entity) {
         this.id = entity.getId();
         this.email = entity.getEmail();
-        this.cart=entity.getCart();
-        this.name=entity.getName();
-        this.password=entity.getPassword();
-        this.phone=entity.getPhone();
+        this.cart = entity.getCart();
+        this.name = entity.getName();
+        this.password = entity.getPassword();
+        this.phone = entity.getPhone();
         for (ShippingAddress shippingInfoEntity : entity.getShippingAddress()) {
             getShippingAddress().add(new ShippingAddress(shippingInfoEntity));
         }
+        for (BillingAddress billingAddressInfo : entity.getBillingAddress()) {
+            getBillingAddress().add(new BillingAddress(billingAddressInfo));
+        }
+        for (PaymentInfo paymentInfo : entity.getPaymentInfo()) {
+            getPaymentInfo().add(new PaymentInfo(paymentInfo));
+        }
     }
+
     public Long getId() {
         return id;
     }
@@ -177,5 +190,24 @@ public class User  {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
+                ", paymentInfo=" + Arrays.toString(paymentInfo.toArray())  +
+                ", billingAddress=" + Arrays.toString(billingAddress.toArray())  +
+                ", shippingAddress=" + Arrays.toString(shippingAddress.toArray()) +
+                ", orders=" + orders +
+                ", cart=" + cart +
+                ", roles=" + roles +
+                '}';
     }
 }

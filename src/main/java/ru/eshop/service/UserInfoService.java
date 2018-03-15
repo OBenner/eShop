@@ -1,9 +1,6 @@
 package ru.eshop.service;
 
-import ru.eshop.model.BillingAddress;
-import ru.eshop.model.PaymentInfo;
-import ru.eshop.model.ShippingAddress;
-import ru.eshop.model.User;
+import ru.eshop.model.*;
 
 public interface UserInfoService {
 
@@ -21,6 +18,8 @@ public interface UserInfoService {
     User addBillingAddress(String email,BillingAddress billingAddress);
 
     User updateBillingAddress(BillingAddress billingAddress);
+
+    CustomerOrder createOrder(String email, Long cartId);
 
 
 }

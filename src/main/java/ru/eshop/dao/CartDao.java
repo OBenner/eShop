@@ -11,5 +11,5 @@ public interface CartDao {
 
     Cart update(Cart cart);
 
-
+Cart findById(Long id);
 }

@@ -81,4 +81,8 @@ public class CartServiceImpl implements CartService {
     public Cart update(Long itemId, Integer quantity) {
         return null;
     }
+
+    public Cart getCartById(Long id) {
+        return cartDao.findById(id);
+    }
 }

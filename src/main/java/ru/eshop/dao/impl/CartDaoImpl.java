@@ -19,5 +19,9 @@ public class CartDaoImpl implements CartDao {
        return entityManager.merge(cart);
     }
 
+    public Cart findById(Long id) {
+        return entityManager.find(Cart.class,id);
+    }
+
 
 }

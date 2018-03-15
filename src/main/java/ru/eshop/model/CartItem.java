@@ -27,6 +27,12 @@ public class CartItem  {
     public CartItem() {
     }
 
+    public CartItem(Product product, Cart cart, Integer quantity) {
+        this.product = product;
+        this.cart = cart;
+        this.quantity = quantity;
+    }
+
     public CartItem(CartItem item) {
         this.product= new Product(item.getProduct());
     }
@@ -61,5 +67,16 @@ public class CartItem  {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "id=" + id +
+                ", product=" + product +
+                ", cart=" + cart +
+                ", quantity=" + quantity +
+                '}';
     }
 }
