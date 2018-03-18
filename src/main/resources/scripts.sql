@@ -123,5 +123,15 @@ CREATE TABLE customer_order
   FOREIGN KEY (customerId) REFERENCES user (id),
   INDEX (id)
 );
+CREATE TABLE order_item
+(
+  id               BIGINT AUTO_INCREMENT
+    PRIMARY KEY,
+  quantity         INT    NULL,
+  customerOrder_Id BIGINT NULL,
+  product_id       BIGINT NULL,
+  FOREIGN KEY (customerOrder_Id) REFERENCES customer_order (id),
+  FOREIGN KEY (product_id) REFERENCES product (productId)
+)
 
 

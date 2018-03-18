@@ -52,7 +52,7 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping(value = "checkOut", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CustomerOrder createOrder(@RequestParam("cartId") Long cartId) {
+    public CustomerOrder createOrder(@RequestParam("cartId")  Long cartId) {
 
         return userInfoService.createOrder(getPrincipal(), cartId);
     }

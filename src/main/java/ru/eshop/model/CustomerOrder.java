@@ -1,46 +1,60 @@
 package ru.eshop.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
+
+import java.util.ArrayList;
+
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "CUSTOMER_ORDER")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class CustomerOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+
     @Column(name = "total")
     private Float total;
+
+
     @Column(name = "date")
     @Temporal(value = TemporalType.TIMESTAMP)
-    private Date date;
+    private String date;
+
+
     @OneToOne
     @JoinColumn(name = "customerId")
-    @JsonBackReference
     private User user;
+
+
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "billingAddressId")
     private BillingAddress billingAddress;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "shippingAddressId")
     private ShippingAddress shippingAddress;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "payment_info_id", nullable = false)
     private PaymentInfo paymentInfo;
 
-    @OneToOne
-    @JoinColumn(name = "cartId")
-    private Cart cart;
+
+    @OneToMany(mappedBy = "customerOrder", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+
+    private List<OrderItem> items;
+
 
     public CustomerOrder() {
     }
@@ -49,14 +63,14 @@ public class CustomerOrder {
         if (customerOrder == null) {
             customerOrder = new CustomerOrder();
         }
+        for (OrderItem item : customerOrder.getItems()) {
+            getItems().add(new OrderItem(item));
+        }
         this.billingAddress = customerOrder.billingAddress;
         this.shippingAddress = customerOrder.shippingAddress;
         this.paymentInfo = customerOrder.paymentInfo;
-        this.cart = customerOrder.cart;
-        this.date = new java.util.Date ();
-        this.id=customerOrder.id;
-        this.total=customerOrder.total;
-        this.user=customerOrder.user;
+        this.id = customerOrder.id;
+        this.user = customerOrder.user;
 
     }
 
@@ -76,11 +90,11 @@ public class CustomerOrder {
         this.total = total;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -116,13 +130,17 @@ public class CustomerOrder {
         this.paymentInfo = paymentInfo;
     }
 
-    public Cart getCart() {
-        return cart;
+    public List<OrderItem> getItems() {
+        if (items == null) {
+            items = new ArrayList<OrderItem>();
+        }
+        return items;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
+
 
 
 }

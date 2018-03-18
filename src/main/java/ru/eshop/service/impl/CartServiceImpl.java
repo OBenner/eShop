@@ -44,10 +44,8 @@ public class CartServiceImpl implements CartService {
     public Cart getCart(String userEmail) {
         User user = userDao.getUserByEmail(userEmail);
         Cart cart = new Cart(user.getCart());
-
-        return cart;
+       return cart;
     }
-
     @Transactional
     public Cart addProductToCart(String userEmail, Long itemId, Integer quantity) {
         User user = userDao.getUserByEmail(userEmail);

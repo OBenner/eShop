@@ -1,12 +1,15 @@
 package ru.eshop.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "BILLING_ADDRESS")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class BillingAddress {
 
     @Id
@@ -26,7 +29,6 @@ public class BillingAddress {
     private String zipCode;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
     private User user;
 
     public BillingAddress() {

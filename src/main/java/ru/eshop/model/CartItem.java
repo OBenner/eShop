@@ -1,6 +1,9 @@
 package ru.eshop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +13,9 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "CART_ITEM")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class CartItem  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +23,12 @@ public class CartItem  {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
+
     @Column(name = "quantity")
     private Integer quantity;
 
@@ -34,7 +43,10 @@ public class CartItem  {
     }
 
     public CartItem(CartItem item) {
+        this.id=item.id;
         this.product= new Product(item.getProduct());
+      //  this.customerOrder=new CustomerOrder(item.customerOrder);
+       // this.quantity =item.product.;
     }
 
     public Long getId() {
@@ -68,6 +80,7 @@ public class CartItem  {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
 
 
     @Override

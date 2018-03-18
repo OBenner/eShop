@@ -16,7 +16,7 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long productId;
+    private Long productId;
 
     @Column(name = "product_name")
     private String productName;
@@ -25,7 +25,7 @@ public class Product {
     @Column(name = "product_description")
     private String productDescription;
     @Column(name = "product_price")
-    private double productPrice;
+    private Float productPrice;
     @Column(name = "product_condition")
     private String productCondition;
     @Column(name = "product_status")
@@ -33,7 +33,7 @@ public class Product {
     @Column(name = "product_manufacturer")
     private String productManufacturer;
     @Column(name = "unit_in_stock")
-    private int unitInStock;
+    private Long unitInStock;
 
 
 
@@ -59,7 +59,7 @@ public class Product {
         return productId;
     }
 
-    public void setProductId(long productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 
@@ -87,11 +87,11 @@ public class Product {
         this.productDescription = productDescription;
     }
 
-    public double getProductPrice() {
+    public Float getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(double productPrice) {
+    public void setProductPrice(Float productPrice) {
         this.productPrice = productPrice;
     }
 
@@ -119,11 +119,11 @@ public class Product {
         this.productManufacturer = productManufacturer;
     }
 
-    public int getUnitInStock() {
+    public Long getUnitInStock() {
         return unitInStock;
     }
 
-    public void setUnitInStock(int unitInStock) {
+    public void setUnitInStock(Long unitInStock) {
         this.unitInStock = unitInStock;
     }
 }

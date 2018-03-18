@@ -5,7 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.eshop.dao.*;
 import ru.eshop.model.*;
+import ru.eshop.service.CartService;
 import ru.eshop.service.UserInfoService;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
@@ -26,6 +32,12 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private CartDao cartDao;
+
+    @Autowired
+    private OrderDao orderDao;
+
+    @Autowired
+    private CartService cartService;
 
     @Transactional
     public User getUserInfo(String email) {
@@ -69,13 +81,38 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Transactional
     public CustomerOrder createOrder(String email, Long cartId) {
-        User user = userDao.getUserByEmail(email);
-        CustomerOrder customerOrder = (CustomerOrder) user.getOrders();
-        customerOrder.setBillingAddress((BillingAddress) user.getBillingAddress());
-        customerOrder.setPaymentInfo((PaymentInfo) user.getPaymentInfo());
-        customerOrder.setShippingAddress((ShippingAddress) user.getShippingAddress());
-        customerOrder.setCart(cartDao.findById(cartId));
-        return new CustomerOrder(customerOrderDao.update(customerOrder)) ;
+        CustomerOrder customerOrder = new CustomerOrder();
+
+        Cart cart = cartDao.findById(cartId);
+        User user = cart.getUser();
+        customerOrder.setUser(user);
+
+
+        List<OrderItem> orderItems = new ArrayList<OrderItem>();
+
+        for (CartItem item : user.getCart().getItems()) {
+            orderItems.add(orderDao.createOrderItem(item));
+        }
+        Float total = 0.0F;
+        for (OrderItem orderItem : orderItems) {
+            orderItem.setCustomerOrder(customerOrder);
+            total+=orderItem.getProduct().getProductPrice()*orderItem.getQuantity();
+        }
+        customerOrder.setItems(orderItems);
+
+
+        customerOrder.setBillingAddress(user.getBillingAddress().get(0));
+        customerOrder.setPaymentInfo(user.getPaymentInfo().get(0));
+        customerOrder.setShippingAddress(user.getShippingAddress().get(0));
+        customerOrder.setTotal(total);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd  'at' HH:mm:ss ");
+        customerOrder.setDate(dateFormat.format( new Date()));
+
+
+        cart.getItems().clear();
+
+        return new CustomerOrder(customerOrderDao.update(customerOrder));
     }
 
 

@@ -1,12 +1,11 @@
 package ru.eshop.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -15,6 +14,9 @@ import java.util.*;
 @NamedQueries(
         @NamedQuery(name = "selectUserByEmail", query = "from User u where u.email=:email")
 )
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class User {
 
     @Id
@@ -37,22 +39,18 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference
     private List<PaymentInfo> paymentInfo;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference
     private List<BillingAddress> billingAddress;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference
     private List<ShippingAddress> shippingAddress;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference
     private List<CustomerOrder> orders;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -64,7 +62,6 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    @JsonManagedReference
     private Set<Role> roles;
 
 
@@ -87,6 +84,8 @@ public class User {
         for (PaymentInfo paymentInfo : entity.getPaymentInfo()) {
             getPaymentInfo().add(new PaymentInfo(paymentInfo));
         }
+
+
     }
 
     public Long getId() {
@@ -174,6 +173,9 @@ public class User {
     }
 
     public Cart getCart() {
+//        if (cart.getStatus().equals("end"))
+//            return new Cart();
+//        else
         return cart;
     }
 
@@ -202,10 +204,10 @@ public class User {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
-                ", paymentInfo=" + Arrays.toString(paymentInfo.toArray())  +
-                ", billingAddress=" + Arrays.toString(billingAddress.toArray())  +
+                ", paymentInfo=" + Arrays.toString(paymentInfo.toArray()) +
+                ", billingAddress=" + Arrays.toString(billingAddress.toArray()) +
                 ", shippingAddress=" + Arrays.toString(shippingAddress.toArray()) +
-                ", orders=" + orders +
+                ", orders=" +Arrays.toString(orders.toArray())  +
                 ", cart=" + cart +
                 ", roles=" + roles +
                 '}';

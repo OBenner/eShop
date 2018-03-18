@@ -1,11 +1,17 @@
 package ru.eshop.dao.impl;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.eshop.dao.CartDao;
 import ru.eshop.model.Cart;
+import ru.eshop.model.CartItem;
+import ru.eshop.model.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
 @Service
 public class CartDaoImpl implements CartDao {
@@ -16,7 +22,7 @@ public class CartDaoImpl implements CartDao {
 
     public Cart update(Cart cart) {
 
-       return entityManager.merge(cart);
+       return entityManager.merge(cart) ;
     }
 
     public Cart findById(Long id) {
@@ -24,4 +30,19 @@ public class CartDaoImpl implements CartDao {
     }
 
 
+
+@Transactional
+    public Cart removeCartItems(Cart cart){
+
+        List<CartItem> cartItems = cart.getItems();
+
+        for (CartItem item : cartItems){
+            removeCartItem(item);
+        }
+        return entityManager.merge(cart);
+    }
+
+    public void removeCartItem(CartItem cartItem){
+       entityManager.remove(cartItem);
+    }
 }

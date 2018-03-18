@@ -1,9 +1,8 @@
 package ru.eshop.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +12,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "CART")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Cart {
 
     @Id
@@ -23,32 +25,34 @@ public class Cart {
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> items;
 
-    @OneToOne(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private CustomerOrder customerOrder;
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<CartItem> items;
 
 
     public Cart() {
+
     }
 
     public Cart(User user, List<CartItem> items) {
+
         this.user = user;
         this.items = items;
+
     }
 
     public Cart(Cart cart) {
-        this.id = cart.id;
-        this.user=cart.user;
         if (cart == null) {
             cart = new Cart();
+
         }
 
         for (CartItem item : cart.getItems()) {
             getItems().add(new CartItem(item));
         }
-        this.customerOrder=cart.customerOrder;
+        this.id = cart.id;
+        this.user = cart.user;
     }
 
     public Long getId() {
@@ -78,13 +82,8 @@ public class Cart {
         this.items = items;
     }
 
-    public CustomerOrder getCustomerOrder() {
-        return customerOrder;
-    }
 
-    public void setCustomerOrder(CustomerOrder customerOrder) {
-        this.customerOrder = customerOrder;
-    }
+
 
     @Override
     public String toString() {
@@ -92,7 +91,7 @@ public class Cart {
                 "id=" + id +
                 ", user=" + user +
                 ", items=" + Arrays.toString(items.toArray()) +
-                ", customerOrder=" + customerOrder +
+                //   ", customerOrder=" + customerOrder +
                 '}';
     }
 }
