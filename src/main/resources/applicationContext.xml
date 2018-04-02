@@ -34,17 +34,22 @@
             <!--</props>-->
         <!--</property>-->
     <!--</bean>-->
+    <!--bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" id="dataSource">
+        <property name="locations">
+            <list>
+                <value>classpath:application.properties</value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean-->
+
     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
-
         <property value="com.mysql.jdbc.Driver" name="driverClassName"/>
-
         <property value="jdbc:mysql://localhost:3306/tee" name="url"/>
-
         <property value="root" name="username"/>
-
         <property value="root" name="password"/>
-
     </bean>
+
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="ru.eshop"/>
@@ -56,7 +61,6 @@
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <!--<prop key="hibernate.default_schema">eshop</prop>-->
                 <prop key="useSSL">false</prop>
                 <prop key="serverTimezone">UTC</prop>
             </props>
@@ -124,6 +128,7 @@
         <security:intercept-url pattern="/catalog" access="permitAll()"/>
         <security:intercept-url pattern="/admin/**" access="hasAuthority('ADMIN')"/>
         <security:intercept-url pattern="/user/**" access="hasAnyAuthority('USER', 'ADMIN')"/>
+        <security:intercept-url pattern="/orders/**" access="hasAnyAuthority('USER', 'ADMIN')"/>
         <!--<security:intercept-url pattern="/**" access="hasAnyAuthority('USER', 'ADMIN')"/>-->
         <security:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
         <!--<security:access-denied-handler ref="oauthAccessDeniedHandler"/>-->

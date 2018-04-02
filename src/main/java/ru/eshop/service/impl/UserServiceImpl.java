@@ -28,10 +28,12 @@ public class UserServiceImpl implements UserService {
     // сделать проверку на существующий в базе email
     @Transactional
     public User addUser(User user) {
-//        if (userDao.getUserByEmail(user.getEmail()).equals(user.getEmail())){
-//            throw new IOException("User Already exist");
-//            return ;
-//        }
+        User existemail = userDao.getUserByEmail(user.getName());
+        if (existemail == null || existemail.getName().equals(user.getName()) || existemail.getEmail().equals(user.getEmail()))
+        {
+            System.out.println("User Exist");
+            return null;
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoles().add(roleDao.findRoleByName("USER"));
 

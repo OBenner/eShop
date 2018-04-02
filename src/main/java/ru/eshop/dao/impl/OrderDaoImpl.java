@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.eshop.dao.OrderDao;
 import ru.eshop.model.CartItem;
+import ru.eshop.model.CustomerOrder;
 import ru.eshop.model.OrderItem;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Service
 public class OrderDaoImpl implements OrderDao{
@@ -20,4 +22,11 @@ public class OrderDaoImpl implements OrderDao{
 
         return entityManager.merge(orderItem) ;
     }
+
+    public List<CustomerOrder> getAllUserOrders() {
+
+        return entityManager.createQuery("select i from CustomerOrder i", CustomerOrder.class).getResultList();
+    }
+
+
 }

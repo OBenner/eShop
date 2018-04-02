@@ -38,15 +38,15 @@ public class CartItem  {
 
     public CartItem(Product product, Cart cart, Integer quantity) {
         this.product = product;
-        this.cart = cart;
+    //    this.cart = cart;
         this.quantity = quantity;
     }
 
     public CartItem(CartItem item) {
         this.id=item.id;
         this.product= new Product(item.getProduct());
-      //  this.customerOrder=new CustomerOrder(item.customerOrder);
-       // this.quantity =item.product.;
+        this.quantity=item.quantity;
+
     }
 
     public Long getId() {

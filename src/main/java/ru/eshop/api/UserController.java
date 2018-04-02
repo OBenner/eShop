@@ -9,6 +9,10 @@ import ru.eshop.model.*;
 import ru.eshop.service.UserInfoService;
 import ru.eshop.service.UserService;
 
+import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("user")
 public class UserController extends BaseController {
@@ -42,18 +46,18 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public User getUserInfo(OAuth2Authentication auth) {
+    public User getUserInfo() {
         return userInfoService.getUserInfo(getPrincipal());
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "{id}")
-    public User getUserInfo(@PathVariable Long id) {
-        return userService.getUserById(id);
-    }
+//    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "{id}")
+//    public User getUserInfo(@PathVariable Long id) {
+//        return userService.getUserById(id);
+//    }
 
     @RequestMapping(value = "checkOut", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CustomerOrder createOrder(@RequestParam("cartId")  Long cartId) {
-
-        return userInfoService.createOrder(getPrincipal(), cartId);
+    public CustomerOrder createOrder() {
+        return userInfoService.createOrder(getPrincipal());
     }
+
 }

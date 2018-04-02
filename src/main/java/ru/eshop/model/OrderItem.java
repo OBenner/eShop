@@ -34,12 +34,17 @@ public class OrderItem {
     }
 
     public OrderItem(OrderItem item) {
-
+        this.id = item.id;
+        this.product = item.product;
+        this.quantity = item.quantity;
+        this.customerOrder=item.customerOrder;
     }
 
     public OrderItem(CartItem item) {
         this.product = item.getProduct();
-        this.quantity=item.getQuantity();
+        this.quantity = item.getQuantity();
+        this.id = item.getId();
+
     }
 
     public Long getId() {

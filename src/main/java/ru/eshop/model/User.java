@@ -84,7 +84,9 @@ public class User {
         for (PaymentInfo paymentInfo : entity.getPaymentInfo()) {
             getPaymentInfo().add(new PaymentInfo(paymentInfo));
         }
-
+        for (CustomerOrder customerOrder : entity.getOrders()) {
+            getOrders().add(new CustomerOrder(customerOrder));
+        }
 
     }
 

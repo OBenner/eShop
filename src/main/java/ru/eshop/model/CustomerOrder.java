@@ -26,7 +26,6 @@ public class CustomerOrder {
 
 
     @Column(name = "date")
-    @Temporal(value = TemporalType.TIMESTAMP)
     private String date;
 
 
@@ -71,7 +70,8 @@ public class CustomerOrder {
         this.paymentInfo = customerOrder.paymentInfo;
         this.id = customerOrder.id;
         this.user = customerOrder.user;
-
+        this.total = customerOrder.total;
+        this.date=customerOrder.date;
     }
 
     public long getId() {
@@ -140,7 +140,6 @@ public class CustomerOrder {
     public void setItems(List<OrderItem> items) {
         this.items = items;
     }
-
 
 
 }

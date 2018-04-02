@@ -67,6 +67,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     public User updateShippingAddress(ShippingAddress shippingAddress) {
+
         return null;
     }
 
@@ -80,11 +81,12 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Transactional
-    public CustomerOrder createOrder(String email, Long cartId) {
+    public CustomerOrder createOrder(String email) {
         CustomerOrder customerOrder = new CustomerOrder();
-
-        Cart cart = cartDao.findById(cartId);
-        User user = cart.getUser();
+        User user = userDao.getUserByEmail(email);
+        Cart cart = user.getCart();
+//        Cart cart = cartDao.findById(cartId);
+//        User user = cart.getUser();
         customerOrder.setUser(user);
 
 
@@ -96,7 +98,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         Float total = 0.0F;
         for (OrderItem orderItem : orderItems) {
             orderItem.setCustomerOrder(customerOrder);
-            total+=orderItem.getProduct().getProductPrice()*orderItem.getQuantity();
+            total += orderItem.getProduct().getProductPrice() * orderItem.getQuantity();
         }
         customerOrder.setItems(orderItems);
 
@@ -107,12 +109,17 @@ public class UserInfoServiceImpl implements UserInfoService {
         customerOrder.setTotal(total);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd  'at' HH:mm:ss ");
-        customerOrder.setDate(dateFormat.format( new Date()));
+        customerOrder.setDate(dateFormat.format(new Date()));
 
 
         cart.getItems().clear();
 
         return new CustomerOrder(customerOrderDao.update(customerOrder));
+    }
+
+    public List<CustomerOrder> getAllUserOrders(String email) {
+        User user = userDao.getUserByEmail(email);
+        return user.getOrders();
     }
 
 

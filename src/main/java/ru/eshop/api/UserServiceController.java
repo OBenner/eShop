@@ -21,6 +21,7 @@ public class UserServiceController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public User create(@RequestBody User user){
+
         return userService.addUser(user);
     }
 
