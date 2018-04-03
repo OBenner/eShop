@@ -34,20 +34,21 @@
             <!--</props>-->
         <!--</property>-->
     <!--</bean>-->
-    <!--bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" id="dataSource">
+
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:application.properties</value>
             </list>
         </property>
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
-    </bean-->
+    </bean>
 
     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
-        <property value="com.mysql.jdbc.Driver" name="driverClassName"/>
-        <property value="jdbc:mysql://localhost:3306/tee" name="url"/>
-        <property value="root" name="username"/>
-        <property value="root" name="password"/>
+        <property value="${spring.datasource.driver}" name="driverClassName"/>
+        <property value= "${spring.datasource.url}" name="url"/>
+        <property value="${spring.datasource.username}" name="username"/>
+        <property value="${spring.datasource.password}" name="password"/>
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -58,9 +59,9 @@
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">${spring.jpa.hibernate.ddl-auto}</prop>
+                <prop key="hibernate.dialect">${spring.jpa.properties.hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${spring.jpa.show-sql}</prop>
                 <prop key="useSSL">false</prop>
                 <prop key="serverTimezone">UTC</prop>
             </props>
