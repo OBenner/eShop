@@ -8,9 +8,15 @@
          http://www.springframework.org/schema/web-services/web-services.xsd">
 
     <sws:annotation-driven />
-    <sws:dynamic-wsdl id="orders"
+
+    <bean id="ordersSchema" class="org.springframework.xml.xsd.SimpleXsdSchema">
+        <property name="xsd" value="/WEB-INF/OrderWebService.xsd"/>
+    </bean>
+
+    <!--sws:dynamic-wsdl id="orders"
                       portTypeName="Orders"
                       locationUri="http://localhost:8080/ordersService/">
         <sws:xsd location="/WEB-INF/xsd/OrderWebService.xsd"/>
-    </sws:dynamic-wsdl>
+    </sws:dynamic-wsdl-->
+    <sws:static-wsdl  id="order" location="/WEB-INF/OrderWebServiceImpl.wsdl"/>
 </beans>
