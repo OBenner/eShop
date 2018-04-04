@@ -5,7 +5,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:security="http://www.springframework.org/schema/security"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
+       xmlns:oauth="http://www.springframework.org/schema/security/oauth2" xmlns:jaxws="http://cxf.apache.org/jaxws"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
@@ -17,9 +17,7 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/security/oauth2
-       http://www.springframework.org/schema/security/spring-security-oauth2.xsd
-
-      ">
+       http://www.springframework.org/schema/security/spring-security-oauth2.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
 
     <!--<bean class="com.zaxxer.hikari.HikariDataSource" id="dataSource">-->

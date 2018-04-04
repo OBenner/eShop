@@ -80,6 +80,22 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.9</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.ws</groupId>
+      <artifactId>spring-ws-core</artifactId>
+      <version>2.4.0.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>wsdl4j</groupId>
+      <artifactId>wsdl4j</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.2.12</version>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>eShop</finalName>
@@ -92,6 +108,19 @@
           <path>
             /eshop
           </path>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
+        <configuration>
+          <schemaLanguage>WSDL</schemaLanguage>
+          <schemaIncludes>
+            <include>SampleWebService.wsdl</include>
+          </schemaIncludes>
+          <schemaDirectory>src/main/resources/</schemaDirectory>
+          <generateDirectory>${project.basedir}/src/main/java/ru/eshop/orderWebService</generateDirectory>
+          <generatePackage>ru.eshop.orderWebService</generatePackage>
         </configuration>
       </plugin>
     </plugins>

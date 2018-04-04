@@ -11,12 +11,12 @@ import java.util.List;
 public interface OrderWebService {
 
     @WebMethod
-   public List<CustomerOrder> getAllOrders();
+    List<CustomerOrder> getAllOrders();
 
     @WebMethod
-  public    CustomerOrder getOrderDetails(Long orderId);
+      CustomerOrder getOrderDetails(Long orderId);
 
 
     @WebMethod
-  public   String setTrack(CustomerOrder order);
+     String setTrack(CustomerOrder order);
 }

@@ -3,6 +3,7 @@ package ru.eshop.model;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
+@XmlRootElement
 public class CustomerOrder {
 
     @Id
