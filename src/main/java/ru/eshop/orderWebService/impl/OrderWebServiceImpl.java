@@ -10,14 +10,14 @@ import ru.eshop.orderWebService.OrderWebService;
 import javax.jws.WebService;
 import java.util.List;
 
-@Endpoint
+
 public class OrderWebServiceImpl implements OrderWebService {
 
     @Autowired
     private OrderDao orderDao;
 
-    @PayloadRoot(localPart = "order", namespace = "http://eshop.ru")
     public List<CustomerOrder> getAllOrders() {
+
         return orderDao.getAllUserOrders();
     }
 

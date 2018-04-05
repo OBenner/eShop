@@ -6,6 +6,7 @@
        xmlns:security="http://www.springframework.org/schema/security"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:oauth="http://www.springframework.org/schema/security/oauth2" xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
@@ -17,7 +18,7 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/security/oauth2
-       http://www.springframework.org/schema/security/spring-security-oauth2.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+       http://www.springframework.org/schema/security/spring-security-oauth2.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
 
     <!--<bean class="com.zaxxer.hikari.HikariDataSource" id="dataSource">-->
@@ -125,6 +126,7 @@
 
     <security:http create-session="never" auto-config="true" use-expressions="true" entry-point-ref="oauthAuthenticationEntryPoint">
         <security:intercept-url pattern="/catalog" access="permitAll()"/>
+        <security:intercept-url pattern="/ws" access="permitAll()"/>
         <security:intercept-url pattern="/admin/**" access="hasAuthority('ADMIN')"/>
         <security:intercept-url pattern="/user/**" access="hasAnyAuthority('USER', 'ADMIN')"/>
         <security:intercept-url pattern="/orders/**" access="hasAnyAuthority('USER', 'ADMIN')"/>
@@ -184,5 +186,18 @@
 
     <!--<beans profile="dev">-->
     <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore"/>
+
+
+    <bean id="OrderWebService" class="ru.eshop.orderWebService.impl.OrderWebServiceImpl" />
+
+    <bean id="orderWebServiceWsClass" class="ru.eshop.orderWebService.rest.OrderWebServiceWsClass">
+        <property name="orderWebService" ref="OrderWebService"></property>
+    </bean>
+    <jaxrs:server id="orderServiceWs" address="/orderService">
+        <jaxrs:serviceBeans>
+            <ref bean="orderWebServiceWsClass" />
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+
 
 </beans>
