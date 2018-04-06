@@ -4,12 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "BILLING_ADDRESS")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
+//@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class BillingAddress {
 
     @Id
@@ -29,6 +35,7 @@ public class BillingAddress {
     private String zipCode;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
+    @XmlTransient
     private User user;
 
     public BillingAddress() {

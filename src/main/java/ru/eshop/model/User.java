@@ -5,6 +5,10 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
@@ -17,6 +21,8 @@ import java.util.*;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
+//@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class User {
 
     @Id
@@ -39,22 +45,27 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
+    @XmlTransient
     private List<PaymentInfo> paymentInfo;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
+    @XmlTransient
     private List<BillingAddress> billingAddress;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
+    @XmlTransient
     private List<ShippingAddress> shippingAddress;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
+    @XmlTransient
     private List<CustomerOrder> orders;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
+    @XmlTransient
     private Cart cart;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -62,6 +73,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
+    @XmlTransient
     private Set<Role> roles;
 
 
@@ -198,20 +210,20 @@ public class User {
 
 
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", password='" + password + '\'' +
-                ", paymentInfo=" + Arrays.toString(paymentInfo.toArray()) +
-                ", billingAddress=" + Arrays.toString(billingAddress.toArray()) +
-                ", shippingAddress=" + Arrays.toString(shippingAddress.toArray()) +
-                ", orders=" +Arrays.toString(orders.toArray())  +
-                ", cart=" + cart +
-                ", roles=" + roles +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", email='" + email + '\'' +
+//                ", phone='" + phone + '\'' +
+//                ", password='" + password + '\'' +
+//                ", paymentInfo=" + Arrays.toString(paymentInfo.toArray()) +
+//                ", billingAddress=" + Arrays.toString(billingAddress.toArray()) +
+//                ", shippingAddress=" + Arrays.toString(shippingAddress.toArray()) +
+//                ", orders=" +Arrays.toString(orders.toArray())  +
+//                ", cart=" + cart +
+//                ", roles=" + roles +
+//                '}';
+//    }
 }

@@ -4,12 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "ORDER_ITEM")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
+//@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class OrderItem {
 
 
@@ -24,6 +30,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "customerOrder_Id", nullable = true)
+    @XmlTransient
     private CustomerOrder customerOrder;
 
     @Column(name = "quantity")

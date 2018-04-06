@@ -77,6 +77,7 @@
     <mvc:annotation-driven/>
     <context:component-scan base-package="ru.eshop"/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
+    <context:annotation-config />
 
     <bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
     <security:authentication-manager alias="userAuthenticationManager">
@@ -186,18 +187,25 @@
 
     <!--<beans profile="dev">-->
     <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore"/>
+    <!-- cxf*.xml provided by CXF library jars - NO NEED TO CREATE THESE! -->
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <!--import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" /-->
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
+    <!-- [JAX-WS] The 'implementor' referenced here is either an.implementation.class
+        OR a #springBeanReference -->
+    <!-- The 'implementor=' value is either an.implementation.class OR a #springBeanReference -->
+    <jaxws:endpoint id="soapServiceWS" address="/ws/orders">
+        <jaxws:implementor>
+            <ref bean="serviceBean"/>
+        </jaxws:implementor>
+    </jaxws:endpoint>
 
-    <bean id="OrderWebService" class="ru.eshop.orderWebService.impl.OrderWebServiceImpl" />
-
-    <bean id="orderWebServiceWsClass" class="ru.eshop.orderWebService.rest.OrderWebServiceWsClass">
-        <property name="orderWebService" ref="OrderWebService"></property>
-    </bean>
-    <jaxrs:server id="orderServiceWs" address="/orderService">
-        <jaxrs:serviceBeans>
-            <ref bean="orderWebServiceWsClass" />
-        </jaxrs:serviceBeans>
-    </jaxrs:server>
+    <!--<jaxrs:server id="restContainer" address="/rest/">-->
+        <!--<jaxrs:serviceBeans>-->
+            <!--<ref bean="serviceBean" />-->
+        <!--</jaxrs:serviceBeans>-->
+    <!--</jaxrs:server>-->
 
 
 </beans>

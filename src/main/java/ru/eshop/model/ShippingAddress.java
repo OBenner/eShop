@@ -3,6 +3,10 @@ package ru.eshop.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 
 @Entity
@@ -10,6 +14,8 @@ import javax.persistence.*;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
+//@XmlRootElement
+//@XmlAccessorType(XmlAccessType.FIELD)
 public class ShippingAddress {
 
     @Id
@@ -31,6 +37,7 @@ public class ShippingAddress {
     @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
   //  @JsonBackReference(value ="shipping")
+    @XmlTransient
     private User user;
 
 

@@ -3,7 +3,10 @@ package ru.eshop.model;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import java.util.ArrayList;
 
@@ -15,7 +18,8 @@ import java.util.List;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-@XmlRootElement
+//@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CustomerOrder {
 
     @Id
@@ -33,12 +37,14 @@ public class CustomerOrder {
 
     @OneToOne
     @JoinColumn(name = "customerId")
+    @XmlTransient
     private User user;
 
 
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "billingAddressId")
+    @XmlTransient
     private BillingAddress billingAddress;
 
     @JsonIgnore
@@ -49,11 +55,12 @@ public class CustomerOrder {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "payment_info_id", nullable = false)
+    @XmlTransient
     private PaymentInfo paymentInfo;
 
 
     @OneToMany(mappedBy = "customerOrder", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-
+   // @XmlTransient
     private List<OrderItem> items;
 
 
