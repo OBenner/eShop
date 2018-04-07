@@ -68,7 +68,7 @@ public interface UserInfoService {
      * @param billingAddressNew   the billing address new
      * @return the user
      */
-    User updateBillingAddress(Long billingAddressOldId, BillingAddress billingAddressNew);
+    User updateBillingAddress(String email,Long billingAddressOldId, BillingAddress billingAddressNew);
 
 
 

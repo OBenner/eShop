@@ -51,7 +51,10 @@ public class UserController extends BaseController {
         return userInfoService.addBillingAddress(getPrincipal(), billingAddress);
     }
 
-
+    @RequestMapping(value = "UptBillingAddress", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public User uptBillingAddress(@RequestParam("id") Long id,@RequestBody BillingAddress billingAddress) {
+        return userInfoService.updateBillingAddress(getPrincipal(),id, billingAddress);
+    }
     /**
      * Add payment info user.
      *

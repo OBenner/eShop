@@ -86,7 +86,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 
 
-    public User updateBillingAddress(Long billingAddressOldId, BillingAddress billingAddressNew) {
+    public User updateBillingAddress(String email,Long billingAddressOldId, BillingAddress billingAddressNew) {
         BillingAddress billingAddress= billingAddressDao.getBillingAddressById(billingAddressOldId);
         User user = billingAddress.getUser();
         billingAddress = new BillingAddress(billingAddressNew);
