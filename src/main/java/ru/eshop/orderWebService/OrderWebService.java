@@ -51,6 +51,13 @@ public interface OrderWebService {
      * @throws IOException the io exception
      */
     @WebMethod
-    OrderInfo setTrackCode(long OrderId,String code) throws IOException;
+    OrderInfo setTrackCode(long OrderId, String code) throws IOException;
 
+    /**
+     * Get order by info in processing list.
+     *
+     * @return the list
+     */
+    @WebMethod
+    List<OrderInfo> getOrderByInfoInProcessing();
 }

@@ -1,48 +1,199 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-   <soap:Body>
-      <ns2:setTrackCodeResponse xmlns:ns2="http://orderWebService.eshop.ru/">
-         <return>
-            <id>2</id>
-            <customerOrder>
-               <id>11</id>
-               <total>1500.0</total>
-               <date>2018.04.07  at 20:31:08</date>
-               <shippingAddress>
-                  <apartmentNumber>1</apartmentNumber>
-                  <city>Saratov</city>
-                  <country>Russia</country>
-                  <id>1</id>
-                  <state>Sar</state>
-                  <streetName>Elm</streetName>
-                  <user>
-                     <id>1</id>
-                     <name>test</name>
-                     <email>test@test.com</email>
-                     <phone>5555555</phone>
-                     <password>98cf6e9e8e0108a4dba89a323ea4729118689bae9118501b68cd0c14d6ebd93dd9b25f458ad1ccc4</password>
-                  </user>
-                  <zipCode>111</zipCode>
-               </shippingAddress>
-               <items>
-                  <id>18</id>
-                  <product>
-                     <productCategory>TV</productCategory>
-                     <productCondition>new</productCondition>
-                     <productDescription>TV</productDescription>
-                     <productId>2</productId>
-                     <productManufacturer>USA</productManufacturer>
-                     <productName>PHILIPS</productName>
-                     <productPrice>1500.0</productPrice>
-                     <productStatus>true</productStatus>
-                     <unitInStock>2</unitInStock>
-                  </product>
-                  <quantity>1</quantity>
-               </items>
-            </customerOrder>
-            <orderCondition>Sent</orderCondition>
-            <trackCode>555</trackCode>
-         </return>
-      </ns2:setTrackCodeResponse>
-   </soap:Body>
-</soap:Envelope>
+<con:soapui-project id="162ea130-c12d-48d6-a73b-75f34c16b7f4" activeEnvironment="Default" name="eShop" resourceRoot="" soapui-version="5.4.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="b360d2b7-00d7-4ce5-91bf-7c7b62a5d8c0" wsaVersion="NONE" name="OrderWebServiceWsClassServiceSoapBinding" type="wsdl" bindingName="{http://impl.orderWebService.eshop.ru/}OrderWebServiceWsClassServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/eshop/ws/orders?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/eshop/ws/orders?wsdl"><con:part><con:url>http://localhost:8080/eshop/ws/orders?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="OrderWebServiceWsClassService" targetNamespace="http://impl.orderWebService.eshop.ru/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://impl.orderWebService.eshop.ru/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://orderWebService.eshop.ru/">
+  <wsdl:import location="http://localhost:8080/eshop/ws/orders?wsdl=SoapRestWS.wsdl" namespace="http://orderWebService.eshop.ru/"></wsdl:import>
+  <wsdl:binding name="OrderWebServiceWsClassServiceSoapBinding" type="ns1:SoapRestWS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getNewOrderByInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getNewOrderByInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getNewOrderByInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setTrackCode">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="setTrackCode">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="setTrackCodeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getOrderByInfoInProcessing">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getOrderByInfoInProcessing">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getOrderByInfoInProcessingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OrderWebServiceWsClassService">
+    <wsdl:port binding="tns:OrderWebServiceWsClassServiceSoapBinding" name="OrderWebServiceWsClassPort">
+      <soap:address location="http://localhost:8080/eshop/ws/orders"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/eshop/ws/orders?wsdl=SoapRestWS.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="SoapRestWS" targetNamespace="http://orderWebService.eshop.ru/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://orderWebService.eshop.ru/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://orderWebService.eshop.ru/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://orderWebService.eshop.ru/">
+      <xs:element name="getNewOrderByInfo" type="tns:getNewOrderByInfo"/>
+      <xs:element name="getNewOrderByInfoResponse" type="tns:getNewOrderByInfoResponse"/>
+      <xs:element name="getOrderByInfoInProcessing" type="tns:getOrderByInfoInProcessing"/>
+      <xs:element name="getOrderByInfoInProcessingResponse" type="tns:getOrderByInfoInProcessingResponse"/>
+      <xs:element name="setTrackCode" type="tns:setTrackCode"/>
+      <xs:element name="setTrackCodeResponse" type="tns:setTrackCodeResponse"/>
+      <xs:complexType name="getNewOrderByInfo">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="getNewOrderByInfoResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:orderInfo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="orderInfo">
+        <xs:sequence>
+          <xs:element name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="customerOrder" type="tns:customerOrder"/>
+          <xs:element minOccurs="0" name="orderCondition" type="xs:string"/>
+          <xs:element minOccurs="0" name="trackCode" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="customerOrder">
+        <xs:sequence>
+          <xs:element name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="total" type="xs:float"/>
+          <xs:element minOccurs="0" name="date" type="xs:string"/>
+          <xs:element minOccurs="0" name="shippingAddress" type="tns:shippingAddress"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="items" nillable="true" type="tns:orderItem"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="shippingAddress">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="apartmentNumber" type="xs:string"/>
+          <xs:element minOccurs="0" name="city" type="xs:string"/>
+          <xs:element minOccurs="0" name="country" type="xs:string"/>
+          <xs:element name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="state" type="xs:string"/>
+          <xs:element minOccurs="0" name="streetName" type="xs:string"/>
+          <xs:element minOccurs="0" name="user" type="tns:user"/>
+          <xs:element minOccurs="0" name="zipCode" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="user">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element minOccurs="0" name="email" type="xs:string"/>
+          <xs:element minOccurs="0" name="phone" type="xs:string"/>
+          <xs:element minOccurs="0" name="password" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="orderItem">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="product" type="tns:product"/>
+          <xs:element minOccurs="0" name="quantity" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="product">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="productCategory" type="xs:string"/>
+          <xs:element minOccurs="0" name="productCondition" type="xs:string"/>
+          <xs:element minOccurs="0" name="productDescription" type="xs:string"/>
+          <xs:element minOccurs="0" name="productId" type="xs:long"/>
+          <xs:element minOccurs="0" name="productManufacturer" type="xs:string"/>
+          <xs:element minOccurs="0" name="productName" type="xs:string"/>
+          <xs:element minOccurs="0" name="productPrice" type="xs:float"/>
+          <xs:element minOccurs="0" name="productStatus" type="xs:string"/>
+          <xs:element minOccurs="0" name="unitInStock" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="setTrackCode">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:long"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="setTrackCodeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:orderInfo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getOrderByInfoInProcessing">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="getOrderByInfoInProcessingResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:orderInfo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="IOException" type="tns:IOException"/>
+      <xs:complexType name="IOException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getOrderByInfoInProcessingResponse">
+    <wsdl:part element="ns1:getOrderByInfoInProcessingResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getNewOrderByInfo">
+    <wsdl:part element="ns1:getNewOrderByInfo" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setTrackCode">
+    <wsdl:part element="ns1:setTrackCode" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IOException">
+    <wsdl:part element="ns1:IOException" name="IOException"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setTrackCodeResponse">
+    <wsdl:part element="ns1:setTrackCodeResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getOrderByInfoInProcessing">
+    <wsdl:part element="ns1:getOrderByInfoInProcessing" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getNewOrderByInfoResponse">
+    <wsdl:part element="ns1:getNewOrderByInfoResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SoapRestWS">
+    <wsdl:operation name="getNewOrderByInfo">
+      <wsdl:input message="ns1:getNewOrderByInfo" name="getNewOrderByInfo"></wsdl:input>
+      <wsdl:output message="ns1:getNewOrderByInfoResponse" name="getNewOrderByInfoResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setTrackCode">
+      <wsdl:input message="ns1:setTrackCode" name="setTrackCode"></wsdl:input>
+      <wsdl:output message="ns1:setTrackCodeResponse" name="setTrackCodeResponse"></wsdl:output>
+      <wsdl:fault message="ns1:IOException" name="IOException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getOrderByInfoInProcessing">
+      <wsdl:input message="ns1:getOrderByInfoInProcessing" name="getOrderByInfoInProcessing"></wsdl:input>
+      <wsdl:output message="ns1:getOrderByInfoInProcessingResponse" name="getOrderByInfoInProcessingResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/eshop/ws/orders</con:endpoint><con:endpoint>http://localhost:8080/eshop/ws/ws/orders</con:endpoint></con:endpoints><con:operation id="8c3132ba-3bab-4bcb-aefa-1eff8f3d6b95" isOneWay="false" action="" name="getNewOrderByInfo" bindingOperationName="getNewOrderByInfo" type="Request-Response" outputName="getNewOrderByInfoResponse" inputName="getNewOrderByInfo" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="8a03fc01-a609-4ced-bb5b-8b140693b3a8" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/eshop/ws/orders</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ord="http://orderWebService.eshop.ru/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ord:getNewOrderByInfo/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:username>admin@admin.com</con:username><con:password>123</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://impl.orderWebService.eshop.ru/SoapRestWS/getNewOrderByInfo"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="ff064e4f-dd6b-4773-9ac7-9bc019100df3" isOneWay="false" action="" name="setTrackCode" bindingOperationName="setTrackCode" type="Request-Response" outputName="setTrackCodeResponse" inputName="setTrackCode" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="89fb1b29-2f42-4a75-b1ec-bdc09a0f5aca" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/eshop/ws/orders</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ord="http://orderWebService.eshop.ru/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ord:setTrackCode>\r
+         <arg0>11</arg0>\r
+         <!--Optional:-->\r
+         <arg1>555</arg1>\r
+      </ord:setTrackCode>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:username>admin@admin.com</con:username><con:password>123</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://impl.orderWebService.eshop.ru/SoapRestWS/setTrackCode"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="b3068dab-43ef-456c-9601-eaf5ba3a9659" isOneWay="false" action="" name="getOrderByInfoInProcessing" bindingOperationName="getOrderByInfoInProcessing" type="Request-Response" outputName="getOrderByInfoInProcessingResponse" inputName="getOrderByInfoInProcessing" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d018a5db-6397-40af-b345-bf65e462ce0d" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/eshop/ws/orders</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ord="http://orderWebService.eshop.ru/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ord:getOrderByInfoInProcessing/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://impl.orderWebService.eshop.ru/SoapRestWS/getOrderByInfoInProcessing"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

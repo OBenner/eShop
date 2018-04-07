@@ -44,6 +44,10 @@ public class OrderWebServiceWsClass implements OrderWebService {
         if (orderInfoList==null){
             return null;
         }
+        for (OrderInfo order:orderInfoList) {
+            order.setOrderCondition("In processing");
+            orderDao.createOrderInfo(order);
+        }
         return orderInfoList;
     }
 
@@ -57,5 +61,13 @@ public class OrderWebServiceWsClass implements OrderWebService {
         orderInfo.setTrackCode(code);
         orderInfo.setOrderCondition("Sent");
         return orderDao.createOrderInfo(orderInfo);
+    }
+
+    public List<OrderInfo> getOrderByInfoInProcessing() {
+        List<OrderInfo> orderInfoList =orderDao.getOrderByInfoInProcessing();
+        if (orderInfoList==null){
+            return null;
+        }
+        return orderInfoList;
     }
 }

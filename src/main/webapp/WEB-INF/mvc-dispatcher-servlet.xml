@@ -127,7 +127,7 @@
 
     <security:http create-session="never" auto-config="true" use-expressions="true" entry-point-ref="oauthAuthenticationEntryPoint">
         <security:intercept-url pattern="/catalog" access="permitAll()"/>
-        <security:intercept-url pattern="/ws/**" access="hasAuthority('ADMIN')"/>
+        <security:intercept-url pattern="/ws/**" access="permitAll()"/>
         <security:intercept-url pattern="/admin/**" access="hasAuthority('ADMIN')"/>
         <security:intercept-url pattern="/user/**" access="hasAnyAuthority('USER', 'ADMIN')"/>
         <security:intercept-url pattern="/orders/**" access="hasAnyAuthority('USER', 'ADMIN')"/>

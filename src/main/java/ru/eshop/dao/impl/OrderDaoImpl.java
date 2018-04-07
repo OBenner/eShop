@@ -46,5 +46,12 @@ public class OrderDaoImpl implements OrderDao{
         return entityManager.merge(orderInfo);
     }
 
+    public List<OrderInfo> getOrderByInfoInProcessing() {
+        return entityManager.createQuery(
+                "SELECT c FROM OrderInfo c WHERE c.orderCondition LIKE :con")
+                .setParameter("con", "In processing")
+                .getResultList();
+    }
+
 
 }

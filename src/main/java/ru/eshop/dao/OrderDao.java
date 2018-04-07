@@ -39,4 +39,6 @@ public interface OrderDao {
 
     OrderInfo createOrderInfo(OrderInfo orderInfo);
 
+    List<OrderInfo>  getOrderByInfoInProcessing();
+
 }
