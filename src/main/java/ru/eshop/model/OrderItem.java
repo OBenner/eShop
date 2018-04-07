@@ -9,6 +9,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ * The type Order item.
+ */
 @Entity
 @Table(name = "ORDER_ITEM")
 @JsonIdentityInfo(
@@ -37,9 +40,17 @@ public class OrderItem {
     private Integer quantity;
 
 
+    /**
+     * Instantiates a new Order item.
+     */
     public OrderItem() {
     }
 
+    /**
+     * Instantiates a new Order item.
+     *
+     * @param item the item
+     */
     public OrderItem(OrderItem item) {
         this.id = item.id;
         this.product = item.product;
@@ -47,6 +58,11 @@ public class OrderItem {
         this.customerOrder=item.customerOrder;
     }
 
+    /**
+     * Instantiates a new Order item.
+     *
+     * @param item the item
+     */
     public OrderItem(CartItem item) {
         this.product = item.getProduct();
         this.quantity = item.getQuantity();
@@ -54,34 +70,74 @@ public class OrderItem {
 
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Gets product.
+     *
+     * @return the product
+     */
     public Product getProduct() {
         return product;
     }
 
+    /**
+     * Sets product.
+     *
+     * @param product the product
+     */
     public void setProduct(Product product) {
         this.product = product;
     }
 
+    /**
+     * Gets customer order.
+     *
+     * @return the customer order
+     */
     public CustomerOrder getCustomerOrder() {
         return customerOrder;
     }
 
+    /**
+     * Sets customer order.
+     *
+     * @param customerOrder the customer order
+     */
     public void setCustomerOrder(CustomerOrder customerOrder) {
         this.customerOrder = customerOrder;
     }
 
+    /**
+     * Gets quantity.
+     *
+     * @return the quantity
+     */
     public Integer getQuantity() {
         return quantity;
     }
 
+    /**
+     * Sets quantity.
+     *
+     * @param quantity the quantity
+     */
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }

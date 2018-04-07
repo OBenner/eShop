@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <ns2:setTrackCodeResponse xmlns:ns2="http://orderWebService.eshop.ru/">
+         <return>
+            <id>2</id>
+            <customerOrder>
+               <id>11</id>
+               <total>1500.0</total>
+               <date>2018.04.07  at 20:31:08</date>
+               <shippingAddress>
+                  <apartmentNumber>1</apartmentNumber>
+                  <city>Saratov</city>
+                  <country>Russia</country>
+                  <id>1</id>
+                  <state>Sar</state>
+                  <streetName>Elm</streetName>
+                  <user>
+                     <id>1</id>
+                     <name>test</name>
+                     <email>test@test.com</email>
+                     <phone>5555555</phone>
+                     <password>98cf6e9e8e0108a4dba89a323ea4729118689bae9118501b68cd0c14d6ebd93dd9b25f458ad1ccc4</password>
+                  </user>
+                  <zipCode>111</zipCode>
+               </shippingAddress>
+               <items>
+                  <id>18</id>
+                  <product>
+                     <productCategory>TV</productCategory>
+                     <productCondition>new</productCondition>
+                     <productDescription>TV</productDescription>
+                     <productId>2</productId>
+                     <productManufacturer>USA</productManufacturer>
+                     <productName>PHILIPS</productName>
+                     <productPrice>1500.0</productPrice>
+                     <productStatus>true</productStatus>
+                     <unitInStock>2</unitInStock>
+                  </product>
+                  <quantity>1</quantity>
+               </items>
+            </customerOrder>
+            <orderCondition>Sent</orderCondition>
+            <trackCode>555</trackCode>
+         </return>
+      </ns2:setTrackCodeResponse>
+   </soap:Body>
+</soap:Envelope>

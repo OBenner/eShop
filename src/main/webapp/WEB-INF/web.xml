@@ -1,6 +1,6 @@
 <!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
   <display-name>eshop</display-name>
@@ -15,18 +15,18 @@
 
 
   <context-param>
-  <param-name>webAppRootKey</param-name>
-  <param-value>eshop</param-value>
-</context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>eshop</param-value>
+  </context-param>
 
-    <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+  <filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
   <listener>
     <listener-class>
@@ -34,15 +34,15 @@
     </listener-class>
   </listener>
 
-    <servlet>
+  <servlet>
     <servlet-name>mvc-dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <!--init-param>
       <param-name>contextConfigLocation</param-name>
       <param-value>classpath:mvc-dispatcher-servlet.xml</param-value>
     </init-param-->
-      <load-on-startup>1</load-on-startup>
-    </servlet>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
 
 
 

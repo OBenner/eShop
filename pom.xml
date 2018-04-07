@@ -83,11 +83,6 @@
       <version>${spring.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context-support</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.ws</groupId>
       <artifactId>spring-ws-core</artifactId>
       <version>2.4.0.RELEASE</version>
@@ -175,19 +170,6 @@
           <path>
             /eshop
           </path>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.jvnet.jaxb2.maven2</groupId>
-        <artifactId>maven-jaxb2-plugin</artifactId>
-        <configuration>
-          <schemaLanguage>WSDL</schemaLanguage>
-          <schemaIncludes>
-            <include>SampleWebService.wsdl</include>
-          </schemaIncludes>
-          <schemaDirectory>src/main/resources/</schemaDirectory>
-          <generateDirectory>${project.basedir}/src/main/java/ru/eshop/orderWebService</generateDirectory>
-          <generatePackage>ru.eshop.orderWebService</generatePackage>
         </configuration>
       </plugin>
     </plugins>

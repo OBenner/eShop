@@ -11,6 +11,9 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
+/**
+ * The type User service controller.
+ */
 @RestController
 @RequestMapping("users")
 public class UserServiceController {
@@ -19,6 +22,12 @@ public class UserServiceController {
     private UserService userService;
 
 
+    /**
+     * Create user.
+     *
+     * @param user the user
+     * @return the user
+     */
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public User create(@RequestBody User user){
 

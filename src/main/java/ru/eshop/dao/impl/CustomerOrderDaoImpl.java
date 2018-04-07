@@ -7,6 +7,9 @@ import ru.eshop.model.CustomerOrder;
 
 import javax.persistence.EntityManager;
 
+/**
+ * The type Customer order dao.
+ */
 @Service
 public class CustomerOrderDaoImpl implements CustomerOrderDao {
 

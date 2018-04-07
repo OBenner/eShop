@@ -31,10 +31,19 @@ public class Cart {
     private List<CartItem> items;
 
 
+    /**
+     * Instantiates a new Cart.
+     */
     public Cart() {
 
     }
 
+    /**
+     * Instantiates a new Cart.
+     *
+     * @param user  the user
+     * @param items the items
+     */
     public Cart(User user, List<CartItem> items) {
 
         this.user = user;
@@ -42,6 +51,11 @@ public class Cart {
 
     }
 
+    /**
+     * Instantiates a new Cart.
+     *
+     * @param cart the cart
+     */
     public Cart(Cart cart) {
         if (cart == null) {
             cart = new Cart();
@@ -55,22 +69,47 @@ public class Cart {
         this.user = cart.user;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Gets items.
+     *
+     * @return the items
+     */
     public List<CartItem> getItems() {
         if (items == null) {
             items = new ArrayList<CartItem>();
@@ -78,6 +117,11 @@ public class Cart {
         return items;
     }
 
+    /**
+     * Sets items.
+     *
+     * @param items the items
+     */
     public void setItems(List<CartItem> items) {
         this.items = items;
     }

@@ -8,8 +8,14 @@ import ru.eshop.model.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+/**
+ * The type Role dao.
+ */
 @Service
 public class RoleDaoImpl implements RoleDao {
+    /**
+     * The Entity manager.
+     */
     @Autowired
     EntityManager entityManager;
 

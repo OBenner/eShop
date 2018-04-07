@@ -8,6 +8,9 @@ import ru.eshop.model.PaymentInfo;
 import javax.persistence.EntityManager;
 
 
+/**
+ * The type Payment info dao.
+ */
 @Service
 public class PaymentInfoDaoImpl implements PaymentInfoDao {
     @Autowired

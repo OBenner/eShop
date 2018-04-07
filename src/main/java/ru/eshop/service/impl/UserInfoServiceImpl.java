@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type User info service.
+ */
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
 
@@ -80,50 +83,17 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userDao.createUser(user);
     }
 
-    @Transactional
-    public CustomerOrder createOrder(String email) {
-        CustomerOrder customerOrder = new CustomerOrder();
-        User user = userDao.getUserByEmail(email);
-        Cart cart = user.getCart();
-//        Cart cart = cartDao.findById(cartId);
-//        User user = cart.getUser();
-        customerOrder.setUser(user);
 
 
-        List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
-        for (CartItem item : user.getCart().getItems()) {
-            orderItems.add(orderDao.createOrderItem(item));
-        }
-        Float total = 0.0F;
-        for (OrderItem orderItem : orderItems) {
-            orderItem.setCustomerOrder(customerOrder);
-            total += orderItem.getProduct().getProductPrice() * orderItem.getQuantity();
-        }
-        customerOrder.setItems(orderItems);
-
-
-        customerOrder.setBillingAddress(user.getBillingAddress().get(0));
-        customerOrder.setPaymentInfo(user.getPaymentInfo().get(0));
-        customerOrder.setShippingAddress(user.getShippingAddress().get(0));
-        customerOrder.setTotal(total);
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd  'at' HH:mm:ss ");
-        customerOrder.setDate(dateFormat.format(new Date()));
-
-
-        cart.getItems().clear();
-
-        return new CustomerOrder(customerOrderDao.update(customerOrder));
-    }
-
-    public List<CustomerOrder> getAllUserOrders(String email) {
-        User user = userDao.getUserByEmail(email);
-        return user.getOrders();
+    public User updateBillingAddress(Long billingAddressOldId, BillingAddress billingAddressNew) {
+        BillingAddress billingAddress= billingAddressDao.getBillingAddressById(billingAddressOldId);
+        User user = billingAddress.getUser();
+        billingAddress = new BillingAddress(billingAddressNew);
+        billingAddress.setUser(user);
+        return user;
     }
 
 
-    public User updateBillingAddress(BillingAddress billingAddress) {
-        return null;
-    }
+
 }

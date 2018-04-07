@@ -13,6 +13,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
+/**
+ * The type Cart dao.
+ */
 @Service
 public class CartDaoImpl implements CartDao {
 
@@ -42,6 +45,11 @@ public class CartDaoImpl implements CartDao {
         return entityManager.merge(cart);
     }
 
+    /**
+     * Remove cart item.
+     *
+     * @param cartItem the cart item
+     */
     public void removeCartItem(CartItem cartItem){
        entityManager.remove(cartItem);
     }

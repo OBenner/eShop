@@ -33,15 +33,30 @@ public class CartItem  {
     private Integer quantity;
 
 
+    /**
+     * Instantiates a new Cart item.
+     */
     public CartItem() {
     }
 
+    /**
+     * Instantiates a new Cart item.
+     *
+     * @param product  the product
+     * @param cart     the cart
+     * @param quantity the quantity
+     */
     public CartItem(Product product, Cart cart, Integer quantity) {
         this.product = product;
     //    this.cart = cart;
         this.quantity = quantity;
     }
 
+    /**
+     * Instantiates a new Cart item.
+     *
+     * @param item the item
+     */
     public CartItem(CartItem item) {
         this.id=item.id;
         this.product= new Product(item.getProduct());
@@ -49,34 +64,74 @@ public class CartItem  {
 
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Gets product.
+     *
+     * @return the product
+     */
     public Product getProduct() {
         return product;
     }
 
+    /**
+     * Sets product.
+     *
+     * @param product the product
+     */
     public void setProduct(Product product) {
         this.product = product;
     }
 
+    /**
+     * Gets cart.
+     *
+     * @return the cart
+     */
     public Cart getCart() {
         return cart;
     }
 
+    /**
+     * Sets cart.
+     *
+     * @param cart the cart
+     */
     public void setCart(Cart cart) {
         this.cart = cart;
     }
 
+    /**
+     * Gets quantity.
+     *
+     * @return the quantity
+     */
     public Integer getQuantity() {
         return quantity;
     }
 
+    /**
+     * Sets quantity.
+     *
+     * @param quantity the quantity
+     */
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }

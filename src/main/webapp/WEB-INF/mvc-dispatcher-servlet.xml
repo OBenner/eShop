@@ -22,16 +22,16 @@
 
 
     <!--<bean class="com.zaxxer.hikari.HikariDataSource" id="dataSource">-->
-        <!--<property value="com.mysql.jdbc.Driver" name="driverClassName"/>-->
-        <!--<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/tee"/>-->
-        <!--<property name="username" value="root"/>-->
-        <!--<property name="password" value="root"/>-->
-        <!--<property name="dataSourceProperties">-->
-            <!--<props>-->
-                <!--<prop key="useSSL">false</prop>-->
-                <!--<prop key="serverTimezone">UTC</prop>-->
-            <!--</props>-->
-        <!--</property>-->
+    <!--<property value="com.mysql.jdbc.Driver" name="driverClassName"/>-->
+    <!--<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/tee"/>-->
+    <!--<property name="username" value="root"/>-->
+    <!--<property name="password" value="root"/>-->
+    <!--<property name="dataSourceProperties">-->
+    <!--<props>-->
+    <!--<prop key="useSSL">false</prop>-->
+    <!--<prop key="serverTimezone">UTC</prop>-->
+    <!--</props>-->
+    <!--</property>-->
     <!--</bean>-->
 
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
@@ -87,23 +87,23 @@
     </security:authentication-manager>
 
     <!--<security:http pattern="/users" create-session="never"-->
-                   <!--authentication-manager-ref="clientAuthenticationManager">-->
-        <!--&lt;!&ndash;<security:intercept-url pattern="/user" method="POST" access="IS_AUTHENTICATED_FULLY()"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<security:intercept-url pattern="/user" method="GET" access="isFullyAuthenticated()"/>&ndash;&gt;-->
-        <!--<security:anonymous enabled="false"/>-->
-        <!--<security:http-basic entry-point-ref="clientAuthenticationEntryPoint"/>-->
-        <!--&lt;!&ndash;<security:access-denied-handler ref="oauthAccessDeniedHandler"/>&ndash;&gt;-->
-        <!--<security:csrf disabled="true"/>-->
+    <!--authentication-manager-ref="clientAuthenticationManager">-->
+    <!--&lt;!&ndash;<security:intercept-url pattern="/user" method="POST" access="IS_AUTHENTICATED_FULLY()"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<security:intercept-url pattern="/user" method="GET" access="isFullyAuthenticated()"/>&ndash;&gt;-->
+    <!--<security:anonymous enabled="false"/>-->
+    <!--<security:http-basic entry-point-ref="clientAuthenticationEntryPoint"/>-->
+    <!--&lt;!&ndash;<security:access-denied-handler ref="oauthAccessDeniedHandler"/>&ndash;&gt;-->
+    <!--<security:csrf disabled="true"/>-->
     <!--</security:http>-->
 
 
     <!--<security:http pattern="/admin" create-session="never"-->
-                   <!--authentication-manager-ref="clientAuthenticationManager">-->
-        <!--<security:intercept-url pattern="/admin" access="hasAuthority('ADMIN')"/>-->
-        <!--<security:anonymous enabled="false"/>-->
-        <!--<security:http-basic entry-point-ref="clientAuthenticationEntryPoint"/>-->
-        <!--&lt;!&ndash;<security:access-denied-handler ref="oauthAccessDeniedHandler"/>&ndash;&gt;-->
-        <!--<security:csrf disabled="true"/>-->
+    <!--authentication-manager-ref="clientAuthenticationManager">-->
+    <!--<security:intercept-url pattern="/admin" access="hasAuthority('ADMIN')"/>-->
+    <!--<security:anonymous enabled="false"/>-->
+    <!--<security:http-basic entry-point-ref="clientAuthenticationEntryPoint"/>-->
+    <!--&lt;!&ndash;<security:access-denied-handler ref="oauthAccessDeniedHandler"/>&ndash;&gt;-->
+    <!--<security:csrf disabled="true"/>-->
     <!--</security:http>-->
 
     <!-- The token endpoint See org.springframework.security.oauth2.provider.endpoint.TokenEndpoint-->
@@ -127,7 +127,7 @@
 
     <security:http create-session="never" auto-config="true" use-expressions="true" entry-point-ref="oauthAuthenticationEntryPoint">
         <security:intercept-url pattern="/catalog" access="permitAll()"/>
-        <security:intercept-url pattern="/ws" access="permitAll()"/>
+        <security:intercept-url pattern="/ws/**" access="hasAuthority('ADMIN')"/>
         <security:intercept-url pattern="/admin/**" access="hasAuthority('ADMIN')"/>
         <security:intercept-url pattern="/user/**" access="hasAnyAuthority('USER', 'ADMIN')"/>
         <security:intercept-url pattern="/orders/**" access="hasAnyAuthority('USER', 'ADMIN')"/>
@@ -195,16 +195,16 @@
     <!-- [JAX-WS] The 'implementor' referenced here is either an.implementation.class
         OR a #springBeanReference -->
     <!-- The 'implementor=' value is either an.implementation.class OR a #springBeanReference -->
-    <jaxws:endpoint id="soapServiceWS" address="/ws/orders">
+    <jaxws:endpoint id="soapServiceWS" address="/orders">
         <jaxws:implementor>
             <ref bean="serviceBean"/>
         </jaxws:implementor>
     </jaxws:endpoint>
 
     <!--<jaxrs:server id="restContainer" address="/rest/">-->
-        <!--<jaxrs:serviceBeans>-->
-            <!--<ref bean="serviceBean" />-->
-        <!--</jaxrs:serviceBeans>-->
+    <!--<jaxrs:serviceBeans>-->
+    <!--<ref bean="serviceBean" />-->
+    <!--</jaxrs:serviceBeans>-->
     <!--</jaxrs:server>-->
 
 

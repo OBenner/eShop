@@ -14,13 +14,22 @@ import ru.eshop.service.UserService;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The type User service.
+ */
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+    /**
+     * The Role dao.
+     */
     @Autowired
     RoleDao roleDao;
 
+    /**
+     * The Password encoder.
+     */
     @Autowired
     PasswordEncoder passwordEncoder;
 

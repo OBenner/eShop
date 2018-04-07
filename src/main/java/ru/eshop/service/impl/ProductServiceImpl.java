@@ -9,6 +9,9 @@ import ru.eshop.service.ProductService;
 
 import java.util.List;
 
+/**
+ * The type Product service.
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
 

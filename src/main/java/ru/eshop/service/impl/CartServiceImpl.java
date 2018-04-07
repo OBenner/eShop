@@ -12,6 +12,9 @@ import ru.eshop.model.Product;
 import ru.eshop.model.User;
 import ru.eshop.service.CartService;
 
+/**
+ * The type Cart service.
+ */
 @Service
 public class CartServiceImpl implements CartService {
 

@@ -9,11 +9,33 @@ import java.util.List;
  */
 public interface ProductDao {
 
+    /**
+     * Gets product list.
+     *
+     * @return the product list
+     */
     List<Product> getProductList();
 
+    /**
+     * Gets product by id.
+     *
+     * @param id the id
+     * @return the product by id
+     */
     Product getProductById(long id);
 
+    /**
+     * Save product product.
+     *
+     * @param product the product
+     * @return the product
+     */
     Product saveProduct(Product product);
 
+    /**
+     * Delete product.
+     *
+     * @param product the product
+     */
     void deleteProduct(Product product);
 }

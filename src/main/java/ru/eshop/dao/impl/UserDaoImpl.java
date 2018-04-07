@@ -15,6 +15,9 @@ import javax.persistence.Query;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type User dao.
+ */
 @Service
 public class UserDaoImpl implements UserDao {
 

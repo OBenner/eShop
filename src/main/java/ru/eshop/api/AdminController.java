@@ -15,6 +15,9 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+/**
+ * The type Admin controller.
+ */
 @RestController
 @RequestMapping("admin")
 public class AdminController {
@@ -25,12 +28,23 @@ public class AdminController {
     private ProductService productService;
 
 
+    /**
+     * Add product product.
+     *
+     * @param product the product
+     * @return the product
+     */
     @RequestMapping(value = "addProduct",method = RequestMethod.POST,produces = APPLICATION_JSON_VALUE)
     public Product addProduct(@RequestBody Product product){
         return productService.addProduct(product);
     }
 
 
+    /**
+     * Gets all users.
+     *
+     * @return the all users
+     */
     @RequestMapping(value = "userList", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
     public List<User> getAllUsers() {
         return userService.getAllUsers();

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import ru.eshop.dao.UserDao;
 import ru.eshop.model.User;
 
+/**
+ * The type Custom user details service.
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired

@@ -8,6 +8,9 @@ import ru.eshop.model.ShippingAddress;
 import javax.persistence.EntityManager;
 
 
+/**
+ * The type Shipping address dao.
+ */
 @Service
 public class ShippingAddressDaoImpl implements ShippingAddressDao {
 

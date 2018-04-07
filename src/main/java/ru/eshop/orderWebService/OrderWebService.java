@@ -2,6 +2,7 @@ package ru.eshop.orderWebService;
 
 
 import ru.eshop.model.CustomerOrder;
+import ru.eshop.model.OrderInfo;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -14,21 +15,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.ws.ResponseWrapper;
+import java.io.IOException;
 import java.util.List;
+
+/**
+ * The interface Order web service.
+ */
 //@Path("/restServicePath")
 @WebService(name = "SoapRestWS")
 public interface OrderWebService {
-
-
-  //  @WebMethod
-
-   // List<CustomerOrder> getAllOrders();
-
-
-  //  CustomerOrder getOrderDetails(Long orderId);
-
-
-  //  String setTrack(CustomerOrder order);
 
 
 //    @GET
@@ -37,10 +32,25 @@ public interface OrderWebService {
 //   // @WebMethod(exclude=true)    //Rest-ONLY - should not be available to JAX-WS web services
 //    public Response getPresidentsByNameRest() ;
 
-    //SOAP/WSDL only method version of getPresidentsRest()
+
+    /**
+     * Gets new order by info.
+     *
+     * @return the new order by info
+     */
     @WebMethod
-//    @ResponseWrapper()  //Handles List return types better (?)
-//    public @XmlElement
-    List<CustomerOrder> getPresidentsByName() ;
+    List<OrderInfo> getNewOrderByInfo();
+
+
+    /**
+     * Sets track code.
+     *
+     * @param OrderId the order id
+     * @param code    the code
+     * @return the track code
+     * @throws IOException the io exception
+     */
+    @WebMethod
+    OrderInfo setTrackCode(long OrderId,String code) throws IOException;
 
 }
